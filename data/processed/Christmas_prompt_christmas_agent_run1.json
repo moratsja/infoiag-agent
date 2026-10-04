@@ -1,0 +1,192 @@
+{
+  "topic": "Christmas",
+  "prompt_id": "prompt_christmas",
+  "mode": "agent",
+  "summary": "Many Americans enjoy celebrating Christmas because it is a time filled with gift exchanges, decorations, and special events. People express gratitude for their presents, as seen in sentiments of being thankful for gifts received even when they exceed expectations. The holiday is also an opportunity for social gatherings and celebrations, such as watching favorite shows or movies and spending time with loved ones. However, not everyone finds the holiday entirely joyful; some mention stress from holiday weight gain, financial strain, or unfulfilled expectations. Despite these challenges, the overall sentiment remains positive with anticipation for the festive spirit and memories created during the Christmas season.",
+  "issues": [],
+  "claims": [
+    {
+      "subject": "Many Americans",
+      "predicate": "enjoy",
+      "object": "celebrating Christmas",
+      "scope": "many",
+      "claim_type": "attitude",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "Americans",
+        "Christmas"
+      ],
+      "text": "Many Americans enjoy celebrating Christmas because it is a time filled with gift exchanges, decorations, and special events."
+    },
+    {
+      "subject": "People",
+      "predicate": "express",
+      "object": "gratitude for their presents",
+      "scope": "general",
+      "claim_type": "observation",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "People"
+      ],
+      "text": "People express gratitude for their presents, as seen in sentiments of being thankful for gifts received even when they exceed expectations."
+    },
+    {
+      "subject": "The holiday",
+      "predicate": "is",
+      "object": "an opportunity for social gatherings and celebrations",
+      "scope": "universal",
+      "claim_type": "ontology_relation",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "The holiday"
+      ],
+      "text": "The holiday is also an opportunity for social gatherings and celebrations, such as watching favorite shows or movies and spending time with loved ones."
+    },
+    {
+      "subject": "Some",
+      "predicate": "mention",
+      "object": "stress from holiday weight gain, financial strain, or unfulfilled expectations",
+      "scope": "some",
+      "claim_type": "observation",
+      "confidence": 0.7,
+      "relevant_entities": [
+        "Some"
+      ],
+      "text": "However, not everyone finds the holiday entirely joyful; some mention stress from holiday weight gain, financial strain, or unfulfilled expectations."
+    },
+    {
+      "subject": "The overall sentiment",
+      "predicate": "remains",
+      "object": "positive with anticipation for the festive spirit and memories created during the Christmas season",
+      "scope": "general",
+      "claim_type": "observation",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "The overall sentiment",
+        "Christmas season"
+      ],
+      "text": "Despite these challenges, the overall sentiment remains positive with anticipation for the festive spirit and memories created during the Christmas season."
+    }
+  ],
+  "claim_evaluations": [
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Many Americans enjoy celebrating Christmas'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Many Americans",
+        "predicate": "enjoy",
+        "object": "celebrating Christmas",
+        "scope": "many",
+        "claim_type": "attitude",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "Americans",
+          "Christmas"
+        ],
+        "text": "Many Americans enjoy celebrating Christmas because it is a time filled with gift exchanges, decorations, and special events."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'People express gratitude for their presents'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "People",
+        "predicate": "express",
+        "object": "gratitude for their presents",
+        "scope": "general",
+        "claim_type": "observation",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "People"
+        ],
+        "text": "People express gratitude for their presents, as seen in sentiments of being thankful for gifts received even when they exceed expectations."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'The holiday is an opportunity for social gatherings and celebrations'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "The holiday",
+        "predicate": "is",
+        "object": "an opportunity for social gatherings and celebrations",
+        "scope": "universal",
+        "claim_type": "ontology_relation",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "The holiday"
+        ],
+        "text": "The holiday is also an opportunity for social gatherings and celebrations, such as watching favorite shows or movies and spending time with loved ones."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Some mention stress from holiday weight gain, financial strain, or unfulfilled expectations'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Some",
+        "predicate": "mention",
+        "object": "stress from holiday weight gain, financial strain, or unfulfilled expectations",
+        "scope": "some",
+        "claim_type": "observation",
+        "confidence": 0.7,
+        "relevant_entities": [
+          "Some"
+        ],
+        "text": "However, not everyone finds the holiday entirely joyful; some mention stress from holiday weight gain, financial strain, or unfulfilled expectations."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'The overall sentiment remains positive with anticipation for the festive spirit and memories created during the Christmas season'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "The overall sentiment",
+        "predicate": "remains",
+        "object": "positive with anticipation for the festive spirit and memories created during the Christmas season",
+        "scope": "general",
+        "claim_type": "observation",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "The overall sentiment",
+          "Christmas season"
+        ],
+        "text": "Despite these challenges, the overall sentiment remains positive with anticipation for the festive spirit and memories created during the Christmas season."
+      }
+    }
+  ],
+  "revision": 0,
+  "passed": true,
+  "trace": [
+    "extract_input",
+    "retrieve_ontology",
+    "summarize",
+    "extract_claims",
+    "query_ontology",
+    "evaluate"
+  ],
+  "elapsed_seconds": 5.32,
+  "query_results": [
+    {
+      "query_id": "q1_americans_not_celebrating_christmas",
+      "manchester": "Person and (isCitizenOf value America) and not (isParticipantOf value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": []
+    },
+    {
+      "query_id": "q5_america_recognizes_christmas",
+      "manchester": "america and (recognizesPublicHoliday value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": [
+        {
+          "country": "america",
+          "holiday": "christmas"
+        }
+      ]
+    }
+  ]
+}

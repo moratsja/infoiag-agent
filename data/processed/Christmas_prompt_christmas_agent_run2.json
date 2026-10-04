@@ -1,0 +1,274 @@
+{
+  "topic": "Christmas",
+  "prompt_id": "prompt_christmas",
+  "mode": "agent",
+  "summary": "Many posts from Americans reflect enjoyment of Christmas through gift-giving, with individuals expressing gratitude for presents and excitement about shopping. Some posts highlight the emotional attachment to festive decorations, like Christmas trees and lights, which contribute to the holiday's appeal. However, there are also mentions of frustration related to Christmas, such as weight gain and the stress of post-holiday clean-up. Christmas serves as a time for family gatherings and shared traditions, with some posts reminiscing about past celebrations or looking forward to holiday movies and special meals. Nonetheless, not everyone finds joy in the season, as some posts hint at family tensions or unmet expectations, offering a more complex view of the holiday.",
+  "issues": [
+    {
+      "kind": "bias",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Many posts from Americans reflect enjoyment of Christmas through gift-giving'. An empty lookup does not prove the claim false. The tweets are the evidence for what people posted. Rewrite this as a limited description of those posts, not as a general attitude."
+    }
+  ],
+  "claims": [
+    {
+      "subject": "Many posts from Americans",
+      "predicate": "reflect",
+      "object": "enjoyment of Christmas through gift-giving",
+      "scope": "general",
+      "claim_type": "attitude",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "Americans",
+        "Christmas"
+      ],
+      "text": "Many posts from Americans reflect enjoyment of Christmas through gift-giving, with individuals expressing gratitude for presents and excitement about shopping."
+    },
+    {
+      "subject": "individuals",
+      "predicate": "express",
+      "object": "gratitude for presents and excitement about shopping",
+      "scope": "many",
+      "claim_type": "attitude",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "individuals"
+      ],
+      "text": "Many posts from Americans reflect enjoyment of Christmas through gift-giving, with individuals expressing gratitude for presents and excitement about shopping."
+    },
+    {
+      "subject": "Some posts",
+      "predicate": "highlight",
+      "object": "emotional attachment to festive decorations",
+      "scope": "some",
+      "claim_type": "observation",
+      "confidence": 0.7,
+      "relevant_entities": [
+        "posts",
+        "festive decorations"
+      ],
+      "text": "Some posts highlight the emotional attachment to festive decorations, like Christmas trees and lights, which contribute to the holiday's appeal."
+    },
+    {
+      "subject": "festive decorations",
+      "predicate": "contribute to",
+      "object": "holiday's appeal",
+      "scope": "general",
+      "claim_type": "observation",
+      "confidence": 0.7,
+      "relevant_entities": [
+        "festive decorations",
+        "holiday"
+      ],
+      "text": "Some posts highlight the emotional attachment to festive decorations, like Christmas trees and lights, which contribute to the holiday's appeal."
+    },
+    {
+      "subject": "mentions",
+      "predicate": "include",
+      "object": "frustration related to Christmas",
+      "scope": "some",
+      "claim_type": "observation",
+      "confidence": 0.6,
+      "relevant_entities": [
+        "mentions",
+        "frustration",
+        "Christmas"
+      ],
+      "text": "However, there are also mentions of frustration related to Christmas, such as weight gain and the stress of post-holiday clean-up."
+    },
+    {
+      "subject": "Christmas",
+      "predicate": "serves as",
+      "object": "a time for family gatherings and shared traditions",
+      "scope": "universal",
+      "claim_type": "ontology_relation",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "Christmas",
+        "family gatherings",
+        "shared traditions"
+      ],
+      "text": "Christmas serves as a time for family gatherings and shared traditions, with some posts reminiscing about past celebrations or looking forward to holiday movies and special meals."
+    },
+    {
+      "subject": "some posts",
+      "predicate": "hint at",
+      "object": "family tensions or unmet expectations",
+      "scope": "some",
+      "claim_type": "observation",
+      "confidence": 0.7,
+      "relevant_entities": [
+        "posts",
+        "family tensions",
+        "unmet expectations"
+      ],
+      "text": "Nonetheless, not everyone finds joy in the season, as some posts hint at family tensions or unmet expectations, offering a more complex view of the holiday."
+    }
+  ],
+  "claim_evaluations": [
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Many posts from Americans reflect enjoyment of Christmas through gift-giving'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Many posts from Americans",
+        "predicate": "reflect",
+        "object": "enjoyment of Christmas through gift-giving",
+        "scope": "general",
+        "claim_type": "attitude",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "Americans",
+          "Christmas"
+        ],
+        "text": "Many posts from Americans reflect enjoyment of Christmas through gift-giving, with individuals expressing gratitude for presents and excitement about shopping."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'individuals express gratitude for presents and excitement about shopping'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "individuals",
+        "predicate": "express",
+        "object": "gratitude for presents and excitement about shopping",
+        "scope": "many",
+        "claim_type": "attitude",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "individuals"
+        ],
+        "text": "Many posts from Americans reflect enjoyment of Christmas through gift-giving, with individuals expressing gratitude for presents and excitement about shopping."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Some posts highlight emotional attachment to festive decorations'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Some posts",
+        "predicate": "highlight",
+        "object": "emotional attachment to festive decorations",
+        "scope": "some",
+        "claim_type": "observation",
+        "confidence": 0.7,
+        "relevant_entities": [
+          "posts",
+          "festive decorations"
+        ],
+        "text": "Some posts highlight the emotional attachment to festive decorations, like Christmas trees and lights, which contribute to the holiday's appeal."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'festive decorations contribute to holiday's appeal'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "festive decorations",
+        "predicate": "contribute to",
+        "object": "holiday's appeal",
+        "scope": "general",
+        "claim_type": "observation",
+        "confidence": 0.7,
+        "relevant_entities": [
+          "festive decorations",
+          "holiday"
+        ],
+        "text": "Some posts highlight the emotional attachment to festive decorations, like Christmas trees and lights, which contribute to the holiday's appeal."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'mentions include frustration related to Christmas'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "mentions",
+        "predicate": "include",
+        "object": "frustration related to Christmas",
+        "scope": "some",
+        "claim_type": "observation",
+        "confidence": 0.6,
+        "relevant_entities": [
+          "mentions",
+          "frustration",
+          "Christmas"
+        ],
+        "text": "However, there are also mentions of frustration related to Christmas, such as weight gain and the stress of post-holiday clean-up."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Christmas serves as a time for family gatherings and shared traditions'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Christmas",
+        "predicate": "serves as",
+        "object": "a time for family gatherings and shared traditions",
+        "scope": "universal",
+        "claim_type": "ontology_relation",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "Christmas",
+          "family gatherings",
+          "shared traditions"
+        ],
+        "text": "Christmas serves as a time for family gatherings and shared traditions, with some posts reminiscing about past celebrations or looking forward to holiday movies and special meals."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'some posts hint at family tensions or unmet expectations'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "some posts",
+        "predicate": "hint at",
+        "object": "family tensions or unmet expectations",
+        "scope": "some",
+        "claim_type": "observation",
+        "confidence": 0.7,
+        "relevant_entities": [
+          "posts",
+          "family tensions",
+          "unmet expectations"
+        ],
+        "text": "Nonetheless, not everyone finds joy in the season, as some posts hint at family tensions or unmet expectations, offering a more complex view of the holiday."
+      }
+    }
+  ],
+  "revision": 1,
+  "passed": false,
+  "trace": [
+    "extract_input",
+    "retrieve_ontology",
+    "summarize",
+    "extract_claims",
+    "query_ontology",
+    "evaluate",
+    "rewrite",
+    "extract_claims",
+    "query_ontology",
+    "evaluate"
+  ],
+  "elapsed_seconds": 15.665,
+  "query_results": [
+    {
+      "query_id": "q1_americans_not_celebrating_christmas",
+      "manchester": "Person and (isCitizenOf value America) and not (isParticipantOf value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": []
+    },
+    {
+      "query_id": "q5_america_recognizes_christmas",
+      "manchester": "america and (recognizesPublicHoliday value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": [
+        {
+          "country": "america",
+          "holiday": "christmas"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "topic": "Christmas",
+  "prompt_id": "prompt_christmas",
+  "mode": "agent",
+  "summary": "Americans from different backgrounds express varied experiences with Christmas, revealing why it is a beloved holiday for many. White individuals often highlight the joy of receiving gifts and spending time with family, although some mention the stress of holiday weight gain or the inconvenience of taking down decorations. Hispanic individuals share similar sentiments, enjoying the festivities and the gifts, but also point out post-holiday challenges, such as illness or leftover financial strain. African-American individuals express enjoyment of Christmas break and gifts, yet also joke about the laziness of leaving decorations up too long. Overall, across these groups, Christmas is cherished as a time for giving, receiving, and enjoying the holiday spirit, even if it occasionally brings some challenges.",
+  "issues": [],
+  "claims": [
+    {
+      "subject": "Americans",
+      "predicate": "express",
+      "object": "varied experiences with Christmas",
+      "scope": "general",
+      "claim_type": "observation",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "Americans"
+      ],
+      "text": "Americans from different backgrounds express varied experiences with Christmas, revealing why it is a beloved holiday for many."
+    },
+    {
+      "subject": "White individuals",
+      "predicate": "highlight",
+      "object": "the joy of receiving gifts and spending time with family",
+      "scope": "general",
+      "claim_type": "attitude",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "White individuals"
+      ],
+      "text": "White individuals often highlight the joy of receiving gifts and spending time with family, although some mention the stress of holiday weight gain or the inconvenience of taking down decorations."
+    },
+    {
+      "subject": "Hispanic individuals",
+      "predicate": "share",
+      "object": "similar sentiments",
+      "scope": "general",
+      "claim_type": "attitude",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "Hispanic individuals"
+      ],
+      "text": "Hispanic individuals share similar sentiments, enjoying the festivities and the gifts, but also point out post-holiday challenges, such as illness or leftover financial strain."
+    },
+    {
+      "subject": "African-American individuals",
+      "predicate": "express",
+      "object": "enjoyment of Christmas break and gifts",
+      "scope": "general",
+      "claim_type": "attitude",
+      "confidence": 0.8,
+      "relevant_entities": [
+        "African-American individuals"
+      ],
+      "text": "African-American individuals express enjoyment of Christmas break and gifts, yet also joke about the laziness of leaving decorations up too long."
+    },
+    {
+      "subject": "Christmas",
+      "predicate": "is cherished as",
+      "object": "a time for giving, receiving, and enjoying the holiday spirit",
+      "scope": "general",
+      "claim_type": "attitude",
+      "confidence": 0.9,
+      "relevant_entities": [
+        "Christmas"
+      ],
+      "text": "Overall, across these groups, Christmas is cherished as a time for giving, receiving, and enjoying the holiday spirit, even if it occasionally brings some challenges."
+    }
+  ],
+  "claim_evaluations": [
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Americans express varied experiences with Christmas'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Americans",
+        "predicate": "express",
+        "object": "varied experiences with Christmas",
+        "scope": "general",
+        "claim_type": "observation",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "Americans"
+        ],
+        "text": "Americans from different backgrounds express varied experiences with Christmas, revealing why it is a beloved holiday for many."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'White individuals highlight the joy of receiving gifts and spending time with family'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "White individuals",
+        "predicate": "highlight",
+        "object": "the joy of receiving gifts and spending time with family",
+        "scope": "general",
+        "claim_type": "attitude",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "White individuals"
+        ],
+        "text": "White individuals often highlight the joy of receiving gifts and spending time with family, although some mention the stress of holiday weight gain or the inconvenience of taking down decorations."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Hispanic individuals share similar sentiments'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Hispanic individuals",
+        "predicate": "share",
+        "object": "similar sentiments",
+        "scope": "general",
+        "claim_type": "attitude",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "Hispanic individuals"
+        ],
+        "text": "Hispanic individuals share similar sentiments, enjoying the festivities and the gifts, but also point out post-holiday challenges, such as illness or leftover financial strain."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'African-American individuals express enjoyment of Christmas break and gifts'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "African-American individuals",
+        "predicate": "express",
+        "object": "enjoyment of Christmas break and gifts",
+        "scope": "general",
+        "claim_type": "attitude",
+        "confidence": 0.8,
+        "relevant_entities": [
+          "African-American individuals"
+        ],
+        "text": "African-American individuals express enjoyment of Christmas break and gifts, yet also joke about the laziness of leaving decorations up too long."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Christmas is cherished as a time for giving, receiving, and enjoying the holiday spirit'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Christmas",
+        "predicate": "is cherished as",
+        "object": "a time for giving, receiving, and enjoying the holiday spirit",
+        "scope": "general",
+        "claim_type": "attitude",
+        "confidence": 0.9,
+        "relevant_entities": [
+          "Christmas"
+        ],
+        "text": "Overall, across these groups, Christmas is cherished as a time for giving, receiving, and enjoying the holiday spirit, even if it occasionally brings some challenges."
+      }
+    }
+  ],
+  "revision": 0,
+  "passed": true,
+  "trace": [
+    "extract_input",
+    "retrieve_ontology",
+    "summarize",
+    "extract_claims",
+    "query_ontology",
+    "evaluate"
+  ],
+  "elapsed_seconds": 5.123,
+  "query_results": [
+    {
+      "query_id": "q1_americans_not_celebrating_christmas",
+      "manchester": "Person and (isCitizenOf value America) and not (isParticipantOf value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": []
+    },
+    {
+      "query_id": "q5_america_recognizes_christmas",
+      "manchester": "america and (recognizesPublicHoliday value christmas)",
+      "status": "ok",
+      "detail": "sparql-closed-world",
+      "rows": [
+        {
+          "country": "america",
+          "holiday": "christmas"
+        }
+      ]
+    }
+  ]
+}

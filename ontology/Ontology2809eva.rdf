@@ -1,0 +1,1604 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology/"
+     xml:base="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:projectOntology="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#belongsToInternationalOrganization -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#belongsToInternationalOrganization">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#InternationalOrganization"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#belongsToTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#belongsToTeam">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPlayer"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#cannotEat -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#cannotEat">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAllergy"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isIngredientOf"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#causesSymptom -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#causesSymptom">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#collaboratesWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#collaboratesWith">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#competesIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#competesIn">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompetitor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAllergy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAllergy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAllergyOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBehaviour -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBehaviour">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Behaviour"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBorderWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBorderWith">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCapital -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCapital">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCapitalOf"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CapitalCity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCharacterTrait -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCharacterTrait">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CharacterTrait"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompetitor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompetitor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCondition">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCountryOfOrigin -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCountryOfOrigin">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasDisease -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasDisease">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFacilityIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFacilityIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasGenre -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasGenre">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Genre"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeadOfState -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeadOfState">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHeadOfStateOf"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeadquarterIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeadquarterIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasIngredient -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasIngredient">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isIngredientOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasLandmark -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasLandmark">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Landmark"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOccupation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOccupation">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPerformedBy"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasParticipant -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasParticipant"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPartnershipWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPartnershipWith">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPlayer -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPlayer">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasReview -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasReview">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isReviewOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Review"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRitual -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRitual"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSymptomPerson -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSymptomPerson">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTeam -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTeam">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#memberOfLeague"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#LeagueCompetition"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hostsEvent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hostsEvent">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#investsIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#investsIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ResearchAndDevelopment"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAllergyOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAllergyOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAncestorOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAncestorOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAvailableIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isAvailableIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCapitalOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCapitalOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CapitalCity"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCitizenOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCitizenOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCityOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCityOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isDevelopingOutput -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isDevelopingOutput">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ResearchAndDevelopment"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isFriendsWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isFriendsWith">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHeadOfStateOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHeadOfStateOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHostedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHostedBy"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isIngredientOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isIngredientOf">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isLocatedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isLocatedIn">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isMarriedTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isMarriedTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AdultPerson"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AdultPerson"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPartOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPartOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPartOfCompetition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPartOfCompetition">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPerformedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPerformedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isProducedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isProducedBy">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isRecognisedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isRecognisedBy">
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isReviewOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isReviewOf"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isSportPlayedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isSportPlayedBy">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#playsSport"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#memberOfLeague -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#memberOfLeague">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#LeagueCompetition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#offersContent -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#offersContent">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Service"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#offersOccupation -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#offersOccupation">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#originatesInCity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#originatesInCity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#playsSport -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#playsSport">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#produces -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#produces">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#recognizesPublicHoliday -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#recognizesPublicHoliday">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PublicHolidayEvent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#resultFor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#resultFor">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Result"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#resultOfMatch -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#resultOfMatch">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Result"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#spreadsTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#spreadsTo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#takePartIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#takePartIn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAge -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAge">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBuildYear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBuildYear">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Landmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompanyName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompanyName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompetitionName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCompetitionName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCountryName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCountryName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCurrency -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCurrency">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasDate">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFamousFood -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFamousFood">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFoodName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFoodName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFormOfGovernment -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasFormOfGovernment">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeight -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasHeight">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Landmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasIngredientName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasIngredientName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasNumberOfEmployees -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasNumberOfEmployees">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOfficialLanguage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOfficialLanguage">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOutcome -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOutcome">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Result"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:oneOf>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                        <rdf:first>Draw</rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                <rdf:first>Loss</rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/>
+                                        <rdf:first>Win</rdf:first>
+                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </owl:oneOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPopulation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPopulation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPositiveContent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasPositiveContent">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Review"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRevenue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRevenue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRuleDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasRuleDescription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSkillLevel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSkillLevel">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSportName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasSportName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTeamName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTeamName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTradition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasTradition">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPrivatelyOwned -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isPrivatelyOwned">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AdultPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AdultPerson">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAge"/>
+                        <owl:someValuesFrom>
+                            <rdfs:Datatype>
+                                <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                                <owl:withRestrictions rdf:parseType="Collection">
+                                    <rdf:Description>
+                                        <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</xsd:minInclusive>
+                                    </rdf:Description>
+                                </owl:withRestrictions>
+                            </rdfs:Datatype>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AnxietySymptom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AnxietySymptom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Behaviour -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Behaviour"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#BloodPressureHealthCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#BloodPressureHealthCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Book -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Book">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CapitalCity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CapitalCity">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isCapitalOf"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CharacterTrait -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CharacterTrait"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#produces"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+                <owl:onClass rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Competition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Competition"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CulturalEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CulturalEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#DeficiencyHealthCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#DeficiencyHealthCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Disease"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasParticipant"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isHostedBy"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasDate"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#FatiguedSymptom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#FatiguedSymptom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Film -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Film">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Genre -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Genre"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#InternationalOrganization -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#InternationalOrganization"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#InternationalSummitEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#InternationalSummitEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#KindPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#KindPerson">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCharacterTrait"/>
+                        <owl:hasValue rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#kindCharacterTrait"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBehaviour"/>
+                <owl:hasValue rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#helpfulBehaviour"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Landmark -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Landmark"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#LeagueCompetition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#LeagueCompetition">
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#TournamentCompetition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Magazine -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Magazine">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Match"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MediaContent">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#isProducedBy"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Company"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MetabolicHealthCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MetabolicHealthCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HealthCondition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MetropolianCity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MetropolianCity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MonarchPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#MonarchPerson">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#OtherEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#OtherEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#OtherHeadOfStatePerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#OtherHeadOfStatePerson">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PainSymptom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PainSymptom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCountryOfOrigin"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasOccupation"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Occupation"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasAge"/>
+                <owl:someValuesFrom>
+                    <rdfs:Datatype>
+                        <owl:onDatatype rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+                        <owl:withRestrictions rdf:parseType="Collection">
+                            <rdf:Description>
+                                <xsd:minInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</xsd:minInclusive>
+                            </rdf:Description>
+                            <rdf:Description>
+                                <xsd:maxInclusive rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">110</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasName"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Player">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PresidentPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PresidentPerson">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PrimeMinisterPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PrimeMinisterPerson">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#HeadOfStatePerson"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Product -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Product">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PublicHolidayEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PublicHolidayEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#RegiopolisCity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#RegiopolisCity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ResearchAndDevelopment -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ResearchAndDevelopment"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ReservedPerson -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#ReservedPerson">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasCharacterTrait"/>
+                        <owl:hasValue rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#reservedCharacterTrait"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Person"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#hasBehaviour"/>
+                <owl:hasValue rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#nonTalkativeBehaviour"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Result -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Result"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Review -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Review"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ritual -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ritual"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Service -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Service">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CompanyOutput"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Sport"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#SportingCompetitionEvent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#SportingCompetitionEvent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Symptom"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Team"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#TournamentCompetition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#TournamentCompetition"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#TownCity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#TownCity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#VillageCity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#VillageCity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#City"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#america -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#america">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Country"/>
+        <projectOntology:recognizesPublicHoliday rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#christmas"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#breadFood -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#breadFood">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Food"/>
+        <projectOntology:hasIngredient rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#flourIngredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#christmas -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#christmas">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PublicHolidayEvent"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#evaPerson -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#evaPerson">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#AdultPerson"/>
+        <projectOntology:hasAllergy rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#flourIngredient"/>
+        <projectOntology:hasCharacterTrait rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#reservedCharacterTrait"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#flourIngredient -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#flourIngredient">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Ingredient"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#headachePainSymptom -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#headachePainSymptom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PainSymptom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#helpfulBehaviour -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#helpfulBehaviour">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Behaviour"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#kindCharacterTrait -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#kindCharacterTrait">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CharacterTrait"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#muscleAchePainSymptom -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#muscleAchePainSymptom">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#PainSymptom"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#netflixService -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#netflixService">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Service"/>
+        <projectOntology:offersContent rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#theNotebookFilm"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#nonTalkativeBehaviour -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#nonTalkativeBehaviour">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Behaviour"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#reservedCharacterTrait -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#reservedCharacterTrait">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#CharacterTrait"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#romanceGenre -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#romanceGenre">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Genre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#theNotebookFilm -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#theNotebookFilm">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#Film"/>
+        <projectOntology:hasGenre rdf:resource="http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#romanceGenre"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
