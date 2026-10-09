@@ -1,8 +1,4 @@
-"""Map a structured claim to a fixed SPARQL template.
-
-The model does not write SPARQL. Python picks a template from the predicate
-and the entities, then the ontology tool runs that template.
-"""
+# Turn a claim into one of the fixed SPARQL queries. The model never writes the query.
 
 from __future__ import annotations
 
@@ -25,13 +21,8 @@ _LOCAL_NAMES = {
     "sportingcompetitionevent": "SportingCompetitionEvent",
     "sport": "SportingCompetitionEvent",
     "country": "Country",
-    "film": "Film",
-    "netflix": "netflixService",
-    "netflixservice": "netflixService",
-    "thenotebook": "theNotebookFilm",
-    "thenotebookfilm": "theNotebookFilm",
 }
-_QUERY_INDIVIDUALS = {"america", "christmas", "netflixService", "theNotebookFilm"}
+_QUERY_INDIVIDUALS = {"america", "christmas"}
 
 
 def local_name(value: str) -> str:
@@ -40,7 +31,6 @@ def local_name(value: str) -> str:
 
 
 def template_for_claim(claim: dict) -> str | None:
-    """Return a template id, or None when no ontology relation matches the claim."""
     predicate = re.sub(r"[^a-z]", "", claim.get("predicate", "").lower())
     names = _names(claim)
     blob = f"{claim.get('predicate', '')} {claim.get('object', '')} {claim.get('text', '')}".lower()
@@ -49,22 +39,39 @@ def template_for_claim(claim: dict) -> str | None:
     if predicate in {"type", "isa", "rdftype", "hastyp"} or "sport" in claim.get("object", "").lower():
         if "christmas" in names or "america" in names:
             return "individual_type"
-    if predicate in {"offerscontent", "offers"} and ("netflix" in names or "netflixService" in names):
-        return "netflix_offers"
     return None
 
 
 def queries_for_claim(claim: dict) -> list[QueryResult]:
     template = template_for_claim(claim)
+    return _run_template(template, claim)
+
+
+def queries_for_mapping(mapping: dict) -> tuple[str | None, list[QueryResult]]:
+    # The property name comes from the mapper. Only these properties have a fixed query.
+    if not mapping or not mapping.get("ontology_relevant"):
+        return None, []
+    prop = (mapping.get("predicate") or {}).get("ontology_property") or ""
+    if prop == "recognizesPublicHoliday":
+        return "recognizes_public_holiday", _run_template("recognizes_public_holiday", mapping)
+    if prop in {"isParticipantOf", "hasParticipant"}:
+        return "non_participant", _run_template("non_participant", mapping)
+    return None, []
+
+
+def _run_template(template: str | None, source: dict) -> list[QueryResult]:
     if template == "recognizes_public_holiday":
-        return [run_sparql("recognizes_public_holiday", _holiday_sparql(), "recognizesPublicHoliday")]
+        return [run_sparql("q5_america_recognizes_christmas", _holiday_sparql(), "recognizesPublicHoliday")]
+    if template == "non_participant":
+        from src.ontology.queries import get_query
+
+        query = get_query("q1_americans_not_celebrating_christmas")
+        return [run_sparql(query.id, query.sparql, query.manchester)]
     if template == "individual_type":
-        individual = _individual(claim)
+        individual = _individual(source)
         if individual is None:
             return []
         return [run_sparql(f"individual_type:{individual}", _type_sparql(individual), "rdf:type")]
-    if template == "netflix_offers":
-        return [run_sparql("netflix_offers", _netflix_sparql(), "offersContent")]
     return []
 
 
@@ -105,12 +112,4 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?type WHERE {{
   :{individual} a ?type .
   FILTER(?type != owl:NamedIndividual && ?type != owl:Thing)
-}}"""
-
-
-def _netflix_sparql() -> str:
-    return f"""PREFIX : <{ONTOLOGY_IRI}>
-SELECT ?content ?genre WHERE {{
-  :netflixService :offersContent ?content .
-  OPTIONAL {{ ?content :hasGenre ?genre . }}
 }}"""

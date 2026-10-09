@@ -1,11 +1,6 @@
-"""Paths, model settings, and the two user prompts from Intermediate Report 1."""
-
-from __future__ import annotations
-
 import csv
 import html
 import json
-import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -15,11 +10,10 @@ DATA_RAW = ROOT / "data" / "raw"
 DATA_PROCESSED = ROOT / "data" / "processed"
 DIVSUMM_DIR = DATA_RAW / "divsumm"
 
-load_dotenv(ROOT / ".env")
+load_dotenv(ROOT / ".env")  # only the OpenAI key lives here
 
-GROUPS = ("White", "Hisp", "AA")
+GROUPS = ("White", "Hisp", "AA")  # DivSumm group labels
 
-# User prompts from Intermediate Report 1, section 2. Applied to each topic.
 USER_PROMPTS = {
     "prompt_christmas": (
         "Summarise this text about Christmas in the United States. "
@@ -31,78 +25,46 @@ USER_PROMPTS = {
     ),
 }
 
-
-def env_str(name: str, default: str) -> str:
-    value = os.getenv(name)
-    return value if value else default
-
-
-def env_int(name: str, default: int) -> int:
-    raw = os.getenv(name)
-    return int(raw) if raw else default
+OPENAI_MODEL = "gpt-4o"
+LLM_TEMPERATURE = 0.7
+ONTOLOGY_IRI = "http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#"
+ONTOLOGY_PATH = ROOT / "ontology" / "ontologyStefan.rdf"
+MAX_REVISIONS = 1  # one rewrite, then stop
+SUMMARY_SENTENCES = 5
+MAX_TWEETS = 90
 
 
-def env_float(name: str, default: float) -> float:
-    raw = os.getenv(name)
-    return float(raw) if raw else default
-
-
-LLM_PROVIDER = env_str("LLM_PROVIDER", "ollama")
-LLM_MODEL = env_str("LLM_MODEL", "llama3.1")
-LLM_TEMPERATURE = env_float("LLM_TEMPERATURE", 0.7)
-OLLAMA_BASE_URL = env_str("OLLAMA_BASE_URL", "http://localhost:11434")
-OPENAI_MODEL = env_str("OPENAI_MODEL", "gpt-4o")
-ONTOLOGY_IRI = env_str(
-    "ONTOLOGY_IRI",
-    "http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#",
-)
-def _resolve(value: str) -> Path:
-    path = Path(value)
-    return path if path.is_absolute() else ROOT / path
-
-
-ONTOLOGY_PATH = _resolve(
-    env_str("ONTOLOGY_FILE", str(ROOT / "ontology" / "ontologyStefan.rdf"))
-)
-MAX_REVISIONS = env_int("MAX_REVISIONS", 1)
-SUMMARY_SENTENCES = env_int("SUMMARY_SENTENCES", 5)
-MAX_TWEETS = env_int("MAX_TWEETS", 90)
-
-
-def load_documents(path: Path) -> list[dict[str, str]]:
-    """Load tweets as ``{text, group, topic}``.
-
-    ``group`` is one of White, Hisp, or AA, matching DivSumm.
-    A ``.txt`` file is a DivSumm input document (group, tab, tweet).
-    A ``.json`` file is a list of those objects, or ``{"tweets": [...]}``.
-    """
-    documents = _load_divsumm_txt(path) if path.suffix.lower() == ".txt" else _load_json(path)
+def load_documents(path):
+    # .txt is a DivSumm file (group, tab, tweet). .json is a small example.
+    if path.suffix.lower() == ".txt":
+        documents = _load_txt(path)
+    else:
+        documents = _load_json(path)
     if not documents:
         raise ValueError(f"No tweets in {path}")
     return documents
 
 
-def load_reference_summaries(topic: str) -> list[dict[str, str]]:
-    """Load the two human abstractive summaries for a DivSumm topic."""
+def load_reference_summaries(topic):
+    # Human summaries, used later for comparison. They do not drive the agent.
     folder = DIVSUMM_DIR / "abstractive"
-    paths = sorted(folder.glob(f"{topic}_Annotat*.txt"))
-    summaries: list[dict[str, str]] = []
-    for path in paths:
-        text = _read_divsumm_text(path).replace("\r\n", "\n").strip()
+    summaries = []
+    for path in sorted(folder.glob(f"{topic}_Annotat*.txt")):
+        text = _read_text(path).replace("\r\n", "\n").strip()
         summaries.append({"annotator": path.stem, "text": text})
     return summaries
 
 
-def _load_json(path: Path) -> list[dict[str, str]]:
+def _load_json(path):
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload["tweets"] if isinstance(payload, dict) else payload
     return [_document(row["group"], row["text"], row.get("topic", "")) for row in rows]
 
 
-def _load_divsumm_txt(path: Path) -> list[dict[str, str]]:
+def _load_txt(path):
     topic = path.stem
-    documents: list[dict[str, str]] = []
-    for row in csv.reader(_read_divsumm_text(path).splitlines(), delimiter="\t", quotechar='"'):
+    documents = []
+    for row in csv.reader(_read_text(path).splitlines(), delimiter="\t", quotechar='"'):
         if not row or all(not cell.strip() for cell in row):
             continue
         if len(row) != 2:
@@ -111,13 +73,13 @@ def _load_divsumm_txt(path: Path) -> list[dict[str, str]]:
     return documents
 
 
-def _document(group: str, text: str, topic: str) -> dict[str, str]:
+def _document(group, text, topic):
     group = group.strip()
     if group not in GROUPS:
         raise ValueError(f"Unknown group {group!r}; expected one of {GROUPS}")
     return {"text": html.unescape(str(text)).strip(), "group": group, "topic": str(topic).strip()}
 
 
-def _read_divsumm_text(path: Path) -> str:
-    """DivSumm files are Windows-1252, not UTF-8."""
+def _read_text(path):
+    # DivSumm files are Windows-1252
     return path.read_bytes().decode("cp1252")

@@ -1,8 +1,5 @@
-"""State passed from node to node.
-
-Every field below is plain data so a LangGraph checkpointer can serialize it.
-Nodes return only the keys they change.
-"""
+# Shared data for one run. Nodes return only the fields they change.
+# trace is appended. The other fields are replaced.
 
 from __future__ import annotations
 
@@ -38,10 +35,9 @@ class AgentState(TypedDict):
     prompt_id: str
     k: int
     mode: Literal["agent", "baseline"]
-    extracted_input: dict
     summary_sentences: list[str]
     claims: list[dict]
-    ontology_context: list[QueryResult]
+    mapped_claims: list[dict]
     summary: str
     query_results: list[QueryResult]
     query_results_by_claim: list[dict]

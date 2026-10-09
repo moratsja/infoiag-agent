@@ -1,4 +1,4 @@
-"""Run the ontology agent or the baseline summarizer on one tweet file."""
+# Run one tweet file through the agent, or through the baseline with --baseline.
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from src.ontology.loader import ontology_file
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="INFOIAG ontology-guided summarization agent")
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
         type=Path,
@@ -59,7 +59,7 @@ def main() -> None:
         if args.save:
             _save_run(args, run_index, result, elapsed)
 
-
+# AI generated code
 def _print_run(run_index: int, result: dict, elapsed: float) -> None:
     print(f"\n=== run {run_index} ({result['mode']}) {elapsed:.2f}s ===")
     print(f"trace: {' → '.join(result['trace'])}")
@@ -80,7 +80,7 @@ def _print_run(run_index: int, result: dict, elapsed: float) -> None:
         for item in errors:
             print(f"query error {item['query_id']}: {item['detail']}")
 
-
+# AI generated code
 def _save_run(args: argparse.Namespace, run_index: int, result: dict, elapsed: float) -> None:
     DATA_PROCESSED.mkdir(parents=True, exist_ok=True)
     mode = "baseline" if args.baseline else "agent"
@@ -92,6 +92,7 @@ def _save_run(args: argparse.Namespace, run_index: int, result: dict, elapsed: f
         "summary": result["summary"],
         "issues": result["issues"],
         "claims": result.get("claims") or [],
+        "mapped_claims": result.get("mapped_claims") or [],
         "claim_evaluations": result.get("claim_evaluations") or [],
         "revision": result["revision"],
         "passed": result["passed"] if result["mode"] == "agent" else None,

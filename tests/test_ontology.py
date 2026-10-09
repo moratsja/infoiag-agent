@@ -12,14 +12,10 @@ def test_report_queries_are_registered():
     ids = [query.id for query in QUERIES]
     assert ids == [
         "q1_americans_not_celebrating_christmas",
-        "q2_positive_netflix_reviews",
-        "q3_netflix_cities",
-        "q4_netflix_offered_content",
         "q5_america_recognizes_christmas",
     ]
     assert "not (isParticipantOf value christmas)" in get_query(ids[0]).manchester
-    assert "hasPositiveContent value true" in get_query(ids[1]).manchester
-    assert get_query(ids[2]).manchester.startswith("MetropolianCity")
+    assert "recognizesPublicHoliday value christmas" in get_query(ids[1]).manchester
 
 
 def test_query_selection_follows_topic():
@@ -30,11 +26,7 @@ def test_query_selection_follows_topic():
         "q1_americans_not_celebrating_christmas",
         "q5_america_recognizes_christmas",
     ]
-    assert {query.id for query in netflix} == {
-        "q2_positive_netflix_reviews",
-        "q3_netflix_cities",
-        "q4_netflix_offered_content",
-    }
+    assert netflix == []
     assert paris == []
 
 
@@ -50,21 +42,18 @@ def test_missing_ontology_is_reported_on_the_result(monkeypatch):
     assert result["rows"] == []
 
 
-def test_project_ontology_returns_netflix_film():
+def test_project_ontology_returns_the_christmas_holiday():
     assert "projectOntology#" in ONTOLOGY_IRI
     _load.cache_clear()
     try:
-        offered = run_query(get_query("q4_netflix_offered_content"))
         holiday = run_query(get_query("q5_america_recognizes_christmas"))
         names = list_class_names()
     finally:
         _load.cache_clear()
-    assert offered["status"] == "ok", offered["detail"]
-    assert {"content": "theNotebookFilm", "genre": "romanceGenre"} in offered["rows"]
     assert holiday["status"] == "ok", holiday["detail"]
     assert {"country": "america", "holiday": "christmas"} in holiday["rows"]
-    assert "Person" in names
-    assert "MediaContent" in names
+    assert "PublicHolidayEvent" in names
+    assert "Country" in names
 
 
 def test_divsumm_topics_have_thirty_tweets_per_group():

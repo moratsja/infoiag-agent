@@ -1,9 +1,4 @@
-"""Rewrite the parts of the summary that the ontology check rejected.
-
-Input: current summary, issues, tweets, and the latest query results.
-Output: a new ``summary`` and an incremented ``revision``.
-The graph then extracts and evaluates this text again.
-"""
+# One rewrite of the summary. The graph then extracts claims and checks again.
 
 from __future__ import annotations
 

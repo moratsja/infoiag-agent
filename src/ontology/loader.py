@@ -1,4 +1,4 @@
-"""Load the Protégé ontology from ``ontology/ontology.owl``."""
+# Load ontologyStefan.rdf once and reuse it.
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from src.config import ONTOLOGY_PATH
 
 
 class OntologyNotFound(FileNotFoundError):
-    """Raised when the Protégé export is not at the expected path."""
+    pass
 
 
 def ontology_file() -> Path:
@@ -17,7 +17,6 @@ def ontology_file() -> Path:
 
 
 def load_ontology():
-    """Load and cache the OWL file with owlready2."""
     return _load(str(ontology_file()))
 
 
@@ -34,6 +33,5 @@ def _load(path_str: str):
 
 
 def list_class_names() -> list[str]:
-    """Return class names from the loaded ontology, for checks in the notebook."""
     onto = load_ontology()
     return sorted(cls.name for cls in onto.classes())

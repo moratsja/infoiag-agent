@@ -1,7 +1,7 @@
 from src.config import MAX_REVISIONS
 from src.graph.graph import initial_state
 from src.graph.routing import route_after_evaluate
-from src.nodes.claims import fallback_claims, parse_claims
+from src.nodes.claims import parse_claims
 from src.nodes.evaluate import evaluate, judge_claim
 from src.ontology.claim_queries import queries_for_claim
 from src.ontology.loader import _load
@@ -16,7 +16,6 @@ def test_parse_claims_accepts_structured_json():
       "object": "Christmas",
       "scope": "all",
       "claim_type": "attitude",
-      "confidence": 0.95,
       "relevant_entities": ["America", "christmas"]
     }]}
     """
@@ -24,12 +23,7 @@ def test_parse_claims_accepts_structured_json():
     assert claim["scope"] == "universal"
     assert claim["object"] == "Christmas"
     assert claim["claim_type"] == "attitude"
-
-
-def test_fallback_marks_all_americans_as_universal():
-    claim = fallback_claims("All Americans love Christmas.")[0].model_dump(by_alias=True)
-    assert claim["scope"] == "universal"
-    assert claim["predicate"] == "love"
+    assert "confidence" not in claim
 
 
 def test_supported_holiday_claim():
@@ -59,7 +53,15 @@ def test_contradicted_type_claim():
 
 
 def test_love_claim_is_not_verifiable_from_the_holiday_fact():
-    claim = fallback_claims("Americans love Christmas.")[0].model_dump(by_alias=True)
+    claim = {
+        "subject": "Americans",
+        "predicate": "love",
+        "object": "Christmas",
+        "scope": "general",
+        "claim_type": "attitude",
+        "text": "Americans love Christmas.",
+        "relevant_entities": ["america", "christmas"],
+    }
     verdict = judge_claim(claim, [])
     assert verdict["status"] == "NOT_VERIFIABLE"
 
@@ -67,7 +69,17 @@ def test_love_claim_is_not_verifiable_from_the_holiday_fact():
 def test_broad_christmas_claim_is_rewritten_and_checked_again():
     state = initial_state(documents=[], user_prompt="why Americans love Christmas", topic="Christmas", max_revisions=1)
     state["summary"] = "Americans love Christmas."
-    state["claims"] = [fallback_claims(state["summary"])[0].model_dump(by_alias=True)]
+    state["claims"] = [
+        {
+            "subject": "Americans",
+            "predicate": "love",
+            "object": "Christmas",
+            "scope": "general",
+            "claim_type": "attitude",
+            "text": state["summary"],
+            "relevant_entities": ["america", "christmas"],
+        }
+    ]
     state["query_results"] = []
     state["query_results_by_claim"] = [{"claim_index": 0, "results": []}]
     checked = evaluate(state)
@@ -75,7 +87,17 @@ def test_broad_christmas_claim_is_rewritten_and_checked_again():
     assert route_after_evaluate({**state, **checked}) == "rewrite"
     state["revision"] = 1
     state["summary"] = "Some posts mention gifts. Others mention decorations left up."
-    state["claims"] = [item.model_dump(by_alias=True) for item in fallback_claims(state["summary"])]
+    state["claims"] = [
+        {
+            "subject": "Some posts",
+            "predicate": "mention",
+            "object": "gifts",
+            "scope": "some",
+            "claim_type": "observation",
+            "text": state["summary"],
+            "relevant_entities": [],
+        }
+    ]
     state["query_results_by_claim"] = [{"claim_index": index, "results": []} for index, _ in enumerate(state["claims"])]
     checked_again = evaluate(state)
     assert checked_again["passed"] is True
@@ -124,7 +146,17 @@ def test_group_specific_enthusiasm_is_not_a_broad_claim():
 def test_neutral_christmas_summary_does_not_rewrite():
     state = initial_state(documents=[], user_prompt="", topic="Christmas")
     state["summary"] = "Some people mention gifts. A few posts describe taking decorations down."
-    state["claims"] = [item.model_dump(by_alias=True) for item in fallback_claims(state["summary"])]
+    state["claims"] = [
+        {
+            "subject": "Some people",
+            "predicate": "mention",
+            "object": "gifts",
+            "scope": "some",
+            "claim_type": "observation",
+            "text": state["summary"],
+            "relevant_entities": [],
+        }
+    ]
     state["query_results"] = []
     state["query_results_by_claim"] = [{"claim_index": index, "results": []} for index, _ in enumerate(state["claims"])]
     checked = evaluate(state)

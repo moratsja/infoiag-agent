@@ -8,25 +8,26 @@ def _names(graph) -> set[str]:
 def test_agent_graph_contains_the_check_loop():
     names = _names(build_graph())
     assert {
-        "extract_input",
-        "retrieve_ontology",
         "summarize",
         "extract_claims",
-        "query_ontology",
+        "ontology_mapping",
+        "select_query",
         "evaluate",
         "rewrite",
     } <= names
     edges = {(edge.source, edge.target) for edge in build_graph().get_graph().edges}
+    assert ("summarize", "extract_claims") in edges
+    assert ("extract_claims", "ontology_mapping") in edges
+    assert ("ontology_mapping", "select_query") in edges
+    assert ("select_query", "evaluate") in edges
     assert ("rewrite", "extract_claims") in edges
-    assert ("extract_claims", "query_ontology") in edges
-    assert ("query_ontology", "evaluate") in edges
 
 
 def test_baseline_graph_is_one_shot():
     names = _names(build_baseline_graph())
     assert "summarize" in names
-    assert "retrieve_ontology" not in names
     assert "extract_claims" not in names
-    assert "query_ontology" not in names
+    assert "ontology_mapping" not in names
+    assert "select_query" not in names
     assert "evaluate" not in names
     assert "rewrite" not in names

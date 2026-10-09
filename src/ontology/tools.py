@@ -1,8 +1,4 @@
-"""Tools used by the ontology tool nodes.
-
-``run_queries_for_text`` is the tool both ontology nodes call.
-``list_classes`` is available for inspection and is not part of the rewrite decision.
-"""
+# Run a SPARQL string. A missing file or a bad query comes back as status "error".
 
 from __future__ import annotations
 
@@ -18,12 +14,10 @@ def list_classes() -> list[str]:
 
 
 def run_queries_for_text(topic: str, text: str) -> list[QueryResult]:
-    """Select Intermediate Report 1 queries and execute each one."""
     return [run_query(query) for query in select_queries(topic, text)]
 
 
 def run_sparql(query_id: str, sparql: str, manchester: str = "") -> QueryResult:
-    """Run one fixed SPARQL string. Used by claim templates and by registered queries."""
     try:
         onto = load_ontology()
         rows = _run_sparql(onto, sparql)
@@ -41,7 +35,6 @@ def run_sparql(query_id: str, sparql: str, manchester: str = "") -> QueryResult:
 
 
 def run_query(query: OntologyQuery) -> QueryResult:
-    """Execute one registered query. A missing ontology is reported on the result, not raised."""
     result = run_sparql(query.id, query.sparql, query.manchester)
     return result
 

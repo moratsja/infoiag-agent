@@ -1,12 +1,6 @@
-"""Generate the first summary.
-
-Input: tweets, the user prompt, and (in agent mode) ontology query results.
-Output: ``summary``, a string of about ``k`` sentences.
-"""
+# First summary is written from the tweets. The ontology check happens after this step.
 
 from __future__ import annotations
-
-import json
 
 from src.graph.state import AgentState
 from src.llm.model import AGENT_SYSTEM_PROMPT, BASELINE_SYSTEM_PROMPT, complete
@@ -22,20 +16,13 @@ def summarize(state: AgentState) -> dict:
 
 def _user_message(state: AgentState) -> str:
     tweets = format_documents(state["documents"])
-    parts = [
-        f"Topic: {state['topic']}",
-        f"User request: {state['user_prompt']}",
-        f"Write exactly {state['k']} sentences.",
-        "",
-        "Posts:",
-        tweets,
-    ]
-    if state["mode"] == "agent":
-        parts.extend(
-            [
-                "",
-                "Ontology context (query id, status, rows):",
-                json.dumps(state["ontology_context"], ensure_ascii=False, indent=2),
-            ]
-        )
-    return "\n".join(parts)
+    return "\n".join(
+        [
+            f"Topic: {state['topic']}",
+            f"User request: {state['user_prompt']}",
+            f"Write exactly {state['k']} sentences.",
+            "",
+            "Posts:",
+            tweets,
+        ]
+    )
