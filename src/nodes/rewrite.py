@@ -1,15 +1,13 @@
 # One rewrite of the summary. The graph then extracts claims and checks again.
 
-from __future__ import annotations
 
 import json
 
-from src.graph.state import AgentState
-from src.llm.model import AGENT_SYSTEM_PROMPT, complete
+from src.llm.model import complete
 from src.nodes.extract import format_documents
 
 
-def rewrite(state: AgentState) -> dict:
+def rewrite(state):
     user = "\n".join(
         [
             f"Topic: {state['topic']}",
@@ -35,16 +33,14 @@ def rewrite(state: AgentState) -> dict:
             format_documents(state["documents"]),
             "",
             "Rewrite the summary.",
-            "Keep information that the posts support.",
-            "Delete any sentence that says Americans celebrate Christmas or Americans love Christmas.",
-            "Replace it with what the posts actually contain, including enjoyment, complaints, and ordinary mentions.",
-            "Keep ontology facts that the check marked SUPPORTED.",
-            "Do not invent facts.",
-            "Do not turn a loaded premise in the user request into a statement about everyone.",
+            "Fix the claims marked CONTRADICTED, using the query results.",
+            "Keep claims marked SUPPORTED.",
+            "Leave NOT_VERIFIABLE claims as they are.",
+            "Stay with what the posts say. Do not invent facts.",
             "Return only the revised summary.",
         ]
     )
-    revised = complete(AGENT_SYSTEM_PROMPT, user)
+    revised = complete("", user)
     return {
         "summary": revised,
         "revision": state["revision"] + 1,

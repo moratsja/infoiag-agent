@@ -12,12 +12,13 @@ That question already assumes Americans love Christmas. The 90 tweets are what g
 flowchart TD
   startNode([START]) --> summarize
   summarize --> extract_claims
-  extract_claims --> ontology_mapping
+  extract_claims -->|no claims| finishNode([END])
+  extract_claims -->|claims found| ontology_mapping
   ontology_mapping --> select_query
   select_query --> evaluate
-  evaluate -->|issues and the rewrite has not been used| rewrite
+  evaluate -->|inconsistent, rewrite not used yet| rewrite
   rewrite --> extract_claims
-  evaluate -->|check passed, or the one rewrite is already used| finishNode([END])
+  evaluate -->|no inconsistent claim, or the rewrite is already used| finishNode([END])
 ```
 
 The baseline is just `START → summarize → END`: one GPT-4o summary, no claims, no ontology.
@@ -58,15 +59,15 @@ Python looks at the relation the mapper picked and runs one fixed query, or none
 
 ### 5. evaluate
 
-Each claim gets a label. Supported means the query found that fact, for example the public holiday. Contradicted means the ontology says something else. Not verifiable means we had no query, or the query came back empty.
+Each claim gets a label. Supported means the query found that fact. Contradicted means the ontology says something else. Not verifiable means there was no query, or the query came back empty.
 
-“Americans love Christmas” is not verifiable. We still want that kind of broad sentence rewritten. “Some posts mention gifts” can stay.
+A not-verifiable claim is kept in the log. It does not start a rewrite. “Americans love Christmas” is not verifiable, because the ontology has no relation for that.
 
 ### 6. rewrite, or stop
 
-If the check finds a problem, and we have not rewritten yet, we ask for five new sentences. They should stay with the tweets and drop “Americans love Christmas” or “Americans celebrate Christmas.” Then we check that new summary once.
+A rewrite happens only when a claim is contradicted, and only once. The new summary goes through claim extraction again, and then the run stops.
 
-If nothing is wrong, or we already rewrote once, we stop.
+If nothing is contradicted, the run stops immediately.
 
 ## Where this gets stuck
 

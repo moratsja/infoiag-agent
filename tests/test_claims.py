@@ -4,7 +4,6 @@ from src.graph.routing import route_after_evaluate
 from src.nodes.claims import parse_claims
 from src.nodes.evaluate import evaluate, judge_claim
 from src.ontology.claim_queries import queries_for_claim
-from src.ontology.loader import _load
 from src.ontology.tools import run_sparql
 
 
@@ -66,7 +65,7 @@ def test_love_claim_is_not_verifiable_from_the_holiday_fact():
     assert verdict["status"] == "NOT_VERIFIABLE"
 
 
-def test_broad_christmas_claim_is_rewritten_and_checked_again():
+def test_love_claim_is_logged_but_does_not_rewrite():
     state = initial_state(documents=[], user_prompt="why Americans love Christmas", topic="Christmas", max_revisions=1)
     state["summary"] = "Americans love Christmas."
     state["claims"] = [
@@ -83,25 +82,9 @@ def test_broad_christmas_claim_is_rewritten_and_checked_again():
     state["query_results"] = []
     state["query_results_by_claim"] = [{"claim_index": 0, "results": []}]
     checked = evaluate(state)
-    assert checked["passed"] is False
-    assert route_after_evaluate({**state, **checked}) == "rewrite"
-    state["revision"] = 1
-    state["summary"] = "Some posts mention gifts. Others mention decorations left up."
-    state["claims"] = [
-        {
-            "subject": "Some posts",
-            "predicate": "mention",
-            "object": "gifts",
-            "scope": "some",
-            "claim_type": "observation",
-            "text": state["summary"],
-            "relevant_entities": [],
-        }
-    ]
-    state["query_results_by_claim"] = [{"claim_index": index, "results": []} for index, _ in enumerate(state["claims"])]
-    checked_again = evaluate(state)
-    assert checked_again["passed"] is True
-    assert route_after_evaluate({**state, **checked_again}) == "end"
+    assert checked["claim_evaluations"][0]["status"] == "NOT_VERIFIABLE"
+    assert checked["passed"] is True
+    assert route_after_evaluate({**state, **checked}) == "end"
     assert MAX_REVISIONS == 1
 
 
@@ -165,21 +148,17 @@ def test_neutral_christmas_summary_does_not_rewrite():
 
 
 def test_live_christmas_facts_match_the_ontology():
-    _load.cache_clear()
-    try:
-        america = run_sparql("america_type", _type(":america"))
-        christmas = run_sparql("christmas_type", _type(":christmas"))
-        holiday = run_sparql("holiday", _holiday())
-        mapped = queries_for_claim(
-            {
-                "subject": "America",
-                "predicate": "recognizesPublicHoliday",
-                "object": "Christmas",
-                "relevant_entities": ["america", "christmas"],
-            }
-        )
-    finally:
-        _load.cache_clear()
+    america = run_sparql("america_type", _type(":america"))
+    christmas = run_sparql("christmas_type", _type(":christmas"))
+    holiday = run_sparql("holiday", _holiday())
+    mapped = queries_for_claim(
+        {
+            "subject": "America",
+            "predicate": "recognizesPublicHoliday",
+            "object": "Christmas",
+            "relevant_entities": ["america", "christmas"],
+        }
+    )
     assert "Country" in {row["type"] for row in america["rows"]}
     assert "PublicHolidayEvent" in {row["type"] for row in christmas["rows"]}
     assert {"country": "america", "holiday": "christmas"} in holiday["rows"]
@@ -187,11 +166,11 @@ def test_live_christmas_facts_match_the_ontology():
     assert {"country": "america", "holiday": "christmas"} in mapped[0]["rows"]
 
 
-def _ok(query_id: str, rows: list[dict]) -> dict:
+def _ok(query_id, rows):
     return {"query_id": query_id, "manchester": "", "status": "ok", "detail": "test", "rows": rows}
 
 
-def _type(individual: str) -> str:
+def _type(individual):
     return f"""PREFIX : <http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?type WHERE {{
@@ -200,7 +179,7 @@ SELECT ?type WHERE {{
 }}"""
 
 
-def _holiday() -> str:
+def _holiday():
     return """PREFIX : <http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#>
 SELECT ?country ?holiday WHERE {
   ?country :recognizesPublicHoliday ?holiday .

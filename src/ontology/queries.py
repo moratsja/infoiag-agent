@@ -1,5 +1,4 @@
 
-from __future__ import annotations
 
 from dataclasses import dataclass
 
@@ -19,11 +18,11 @@ class OntologyQuery:
     owl_vs_db: str
 
 
-def _prefix() -> str:
+def _prefix():
     return f"PREFIX : <{ONTOLOGY_IRI}>\n"
 
 
-QUERIES: tuple[OntologyQuery, ...] = (
+QUERIES = (
     OntologyQuery(
         id="q1_americans_not_celebrating_christmas",
         title="Americans who do not celebrate Christmas",
@@ -85,7 +84,7 @@ QUERIES: tuple[OntologyQuery, ...] = (
 )
 
 
-def get_query(query_id: str) -> OntologyQuery:
+def get_query(query_id):
     for query in QUERIES:
         if query.id == query_id:
             return query
@@ -93,10 +92,10 @@ def get_query(query_id: str) -> OntologyQuery:
     raise KeyError(f"Unknown query {query_id!r}. Known queries: {known}")
 
 
-def select_queries(topic: str, text: str) -> list[OntologyQuery]:
+def select_queries(topic, text):
     # A query is included when the topic matches, or when one of its trigger words is in the text.
     blob = f"{topic}\n{text}".lower()
-    selected: list[OntologyQuery] = []
+    selected = []
     for query in QUERIES:
         topic_match = topic.lower() in {name.lower() for name in query.topics}
         trigger_match = any(trigger in blob for trigger in query.triggers)

@@ -5,7 +5,6 @@ import re
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-from src.graph.state import AgentState
 from src.nodes.extract import split_sentences
 
 SCOPES = {"individual", "some", "many", "most", "general", "universal", "limited"}
@@ -54,21 +53,21 @@ class ClaimModel(BaseModel):
 
     @field_validator("scope", mode="before")
     @classmethod
-    def _scope(cls, value: object) -> str:
+    def _scope(cls, value):
         key = str(value or "").strip().lower()
         key = _SCOPE_ALIASES.get(key, key)
         return key if key in SCOPES else "general"
 
     @field_validator("claim_type", mode="before")
     @classmethod
-    def _claim_type(cls, value: object) -> str:
+    def _claim_type(cls, value):
         key = str(value or "").strip().lower().replace(" ", "_")
         key = _TYPE_ALIASES.get(key, key)
         return key if key in CLAIM_TYPES else "factual"
 
     @field_validator("relevant_entities", mode="before")
     @classmethod
-    def _entities(cls, value: object) -> list[str]:
+    def _entities(cls, value):
         if value is None:
             return []
         if isinstance(value, str):
@@ -76,7 +75,7 @@ class ClaimModel(BaseModel):
         return [str(item) for item in value]
 
 
-def parse_claims(payload: str) -> list[ClaimModel]:
+def parse_claims(payload):
     data = json.loads(_json_text(payload))
     rows = data["claims"] if isinstance(data, dict) else data
     if not isinstance(rows, list):
@@ -84,28 +83,34 @@ def parse_claims(payload: str) -> list[ClaimModel]:
     return [ClaimModel.model_validate(row) for row in rows]
 
 
-def dump_claims(claims: list[ClaimModel]) -> list[dict]:
+def dump_claims(claims):
     return [claim.model_dump(by_alias=True) for claim in claims]
 
 
-def extract_claims(state: AgentState) -> dict:
+def extract_claims(state):
     summary = state["summary"]
     claims = _claims_for_summary(summary) if summary.strip() else []
-    return {
-        "claims": dump_claims(claims),
+    dumped = dump_claims(claims)
+    update = {
+        "claims": dumped,
         "summary_sentences": split_sentences(summary),
         "trace": ["extract_claims"],
     }
+    if not dumped:
+        update["passed"] = True
+        update["issues"] = []
+        update["claim_evaluations"] = []
+    return update
 
 
-def _claims_for_summary(summary: str) -> list[ClaimModel]:
+def _claims_for_summary(summary):
     from src.llm.model import complete
 
     raw = complete(EXTRACT_SYSTEM_PROMPT, f"Summary:\n{summary}")
     return parse_claims(raw)
 
 
-def _json_text(payload: str) -> str:
+def _json_text(payload):
     stripped = payload.strip()
     if stripped.startswith("```"):
         stripped = re.sub(r"^```[a-zA-Z]*\n", "", stripped)

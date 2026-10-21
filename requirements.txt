@@ -1,7 +1,0 @@
-langgraph>=0.2.60
-langchain-core>=0.3.0
-langchain-openai>=0.2.0
-owlready2>=0.46
-rdflib>=7.0.0
-python-dotenv>=1.0.0
-pytest>=8.0.0

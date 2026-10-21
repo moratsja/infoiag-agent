@@ -5,12 +5,12 @@ from functools import lru_cache
 from rdflib import OWL, RDF, RDFS, Graph, URIRef
 from rdflib.collection import Collection
 
-from src.ontology.loader import ontology_file
+from src.config import ONTOLOGY_PATH
 
 _SKIP = {"Thing", "Nothing", "Class", "NamedIndividual", "ObjectProperty", "DatatypeProperty"}
 
 
-def local_name(uri) -> str:
+def local_name(uri):
     text = str(uri)
     if "#" in text:
         return text.split("#")[-1]
@@ -19,12 +19,12 @@ def local_name(uri) -> str:
 
 def load_vocabulary(path=None):
     # Classes, object properties, and individuals. Datatype properties are left out.
-    target = str(path or ontology_file())
+    target = str(path or ONTOLOGY_PATH)
     return _load(target)
 
 
 @lru_cache(maxsize=4)
-def _load(path: str) -> dict:
+def _load(path):
     graph = Graph()
     graph.parse(path, format="xml")
     return {
@@ -34,7 +34,7 @@ def _load(path: str) -> dict:
     }
 
 
-def _classes(graph: Graph) -> list[dict]:
+def _classes(graph):
     rows = []
     for cls in graph.subjects(RDF.type, OWL.Class):
         if not isinstance(cls, URIRef):
@@ -53,7 +53,7 @@ def _classes(graph: Graph) -> list[dict]:
     return sorted(rows, key=lambda row: row["name"])
 
 
-def _properties(graph: Graph) -> list[dict]:
+def _properties(graph):
     rows = []
     for prop in graph.subjects(RDF.type, OWL.ObjectProperty):
         if not isinstance(prop, URIRef):
@@ -68,7 +68,7 @@ def _properties(graph: Graph) -> list[dict]:
     return sorted(rows, key=lambda row: row["name"])
 
 
-def _individuals(graph: Graph) -> list[dict]:
+def _individuals(graph):
     rows = []
     for individual in graph.subjects(RDF.type, OWL.NamedIndividual):
         if not isinstance(individual, URIRef):
@@ -81,14 +81,14 @@ def _individuals(graph: Graph) -> list[dict]:
     return sorted(rows, key=lambda row: row["name"])
 
 
-def _class_names(graph: Graph, nodes: list) -> list[str]:
+def _class_names(graph, nodes):
     names = []
     for node in nodes:
         names.extend(_names_from_node(graph, node))
     return sorted({name for name in names if name and name not in _SKIP})
 
 
-def _names_from_node(graph: Graph, node) -> list[str]:
+def _names_from_node(graph, node):
     if isinstance(node, URIRef):
         return [local_name(node)]
     names = []

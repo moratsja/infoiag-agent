@@ -26,7 +26,7 @@ USER_PROMPTS = {
 }
 
 OPENAI_MODEL = "gpt-4o"
-LLM_TEMPERATURE = 0.7
+LLM_TEMPERATURE = 0.0
 ONTOLOGY_IRI = "http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#"
 ONTOLOGY_PATH = ROOT / "ontology" / "ontologyStefan.rdf"
 MAX_REVISIONS = 1  # one rewrite, then stop

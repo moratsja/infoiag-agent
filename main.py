@@ -1,18 +1,16 @@
 # Run one tweet file through the agent, or through the baseline with --baseline.
 
-from __future__ import annotations
 
 import argparse
 import json
 import time
 from pathlib import Path
 
-from src.config import DATA_PROCESSED, SUMMARY_SENTENCES, USER_PROMPTS, load_documents
+from src.config import DATA_PROCESSED, ONTOLOGY_PATH, SUMMARY_SENTENCES, USER_PROMPTS, load_documents
 from src.graph.graph import build_baseline_graph, build_graph, initial_state
-from src.ontology.loader import ontology_file
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--data",
@@ -29,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> None:
+def main():
     args = parse_args()
     documents = load_documents(args.data)
     topic = args.topic or documents[0]["topic"]
@@ -39,8 +37,8 @@ def main() -> None:
     mode = "baseline" if args.baseline else "agent"
     graph = build_baseline_graph() if args.baseline else build_graph()
 
-    if mode == "agent" and not ontology_file().is_file():
-        print(f"Ontology file missing: {ontology_file()}")
+    if mode == "agent" and not ONTOLOGY_PATH.is_file():
+        print(f"Ontology file missing: {ONTOLOGY_PATH}")
         print("Export the Protégé ontology to that path. Queries will be marked as errors until then.")
 
     for run_index in range(1, args.runs + 1):
@@ -59,10 +57,8 @@ def main() -> None:
         if args.save:
             _save_run(args, run_index, result, elapsed)
 
-# AI generated code
-def _print_run(run_index: int, result: dict, elapsed: float) -> None:
+def _print_run(run_index, result, elapsed):
     print(f"\n=== run {run_index} ({result['mode']}) {elapsed:.2f}s ===")
-    print(f"trace: {' → '.join(result['trace'])}")
     print(result["summary"])
     if result["mode"] == "agent":
         print(f"passed: {result['passed']}  revisions: {result['revision']}")
@@ -80,8 +76,7 @@ def _print_run(run_index: int, result: dict, elapsed: float) -> None:
         for item in errors:
             print(f"query error {item['query_id']}: {item['detail']}")
 
-# AI generated code
-def _save_run(args: argparse.Namespace, run_index: int, result: dict, elapsed: float) -> None:
+def _save_run(args, run_index, result, elapsed):
     DATA_PROCESSED.mkdir(parents=True, exist_ok=True)
     mode = "baseline" if args.baseline else "agent"
     destination = DATA_PROCESSED / f"{result['topic']}_{args.prompt}_{mode}_run{run_index}.json"

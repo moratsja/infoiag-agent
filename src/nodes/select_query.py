@@ -1,11 +1,10 @@
 # Pick a fixed SPARQL query from the mapping and run it.
 # A claim with no known property is left unchecked. No query is invented.
 
-from src.graph.state import AgentState
 from src.ontology.claim_queries import queries_for_mapping
 
 
-def select_query(state: AgentState) -> dict:
+def select_query(state):
     claims = state.get("claims") or []
     mappings = state.get("mapped_claims") or []
     by_claim = []
@@ -22,7 +21,7 @@ def select_query(state: AgentState) -> dict:
     }
 
 
-def _merge_results(results: list) -> list:
+def _merge_results(results):
     merged = []
     seen = set()
     for item in results:

@@ -1,12 +1,12 @@
-from __future__ import annotations
+def route_after_extract(state):
+    # No claims means there is nothing to check.
+    if not state.get("claims"):
+        return "end"
+    return "ontology_mapping"
 
-from typing import Literal
 
-from src.graph.state import AgentState
-
-
-def route_after_evaluate(state: AgentState) -> Literal["rewrite", "end"]:
-    # Stop if the check passed, or if the one allowed rewrite is already used.
+def route_after_evaluate(state):
+    # Rewrite once, and only when a claim is inconsistent with the ontology.
     if state["passed"] or state["revision"] >= state["max_revisions"]:
         return "end"
     return "rewrite"

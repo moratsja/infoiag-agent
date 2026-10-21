@@ -4,7 +4,6 @@
 import json
 import re
 
-from src.graph.state import AgentState
 from src.ontology.vocabulary import load_vocabulary
 
 MAPPER_SYSTEM_PROMPT = """You map extracted summary claims to an ontology vocabulary.
@@ -12,17 +11,16 @@ Use only classes, object properties, and individuals from the vocabulary.
 Do not invent names. Do not write SPARQL.
 If a claim cannot be checked with this vocabulary, set ontology_relevant to false.
 Return only JSON: {"mappings": [...]} with one object per claim, in the same order.
-Each mapping has:
-- claim_index
-- ontology_relevant (true or false)
-- subject: text, ontology_class, ontology_entity
-- predicate: text, ontology_property
-- object: text, ontology_class, ontology_entity
+Each mapping is one object with claim_index, ontology_relevant, and nested subject, predicate, and object.
+subject and object each have text, ontology_class, and ontology_entity.
+predicate has text and ontology_property.
 Use "" when a field has no match.
+Example:
+{"mappings": [{"claim_index": 0, "ontology_relevant": true, "subject": {"text": "America", "ontology_class": "Country", "ontology_entity": "america"}, "predicate": {"text": "recognizes", "ontology_property": "recognizesPublicHoliday"}, "object": {"text": "Christmas", "ontology_class": "PublicHolidayEvent", "ontology_entity": "christmas"}}]}
 """
 
 
-def ontology_mapping(state: AgentState) -> dict:
+def ontology_mapping(state):
     claims = state.get("claims") or []
     if not claims:
         return {"mapped_claims": [], "trace": ["ontology_mapping"]}
@@ -44,7 +42,7 @@ def ontology_mapping(state: AgentState) -> dict:
     return {"mapped_claims": parse_mappings(raw, len(claims), vocabulary), "trace": ["ontology_mapping"]}
 
 
-def parse_mappings(payload: str, claim_count: int, vocabulary: dict) -> list[dict]:
+def parse_mappings(payload, claim_count, vocabulary):
     data = json.loads(_json_text(payload))
     rows = data["mappings"] if isinstance(data, dict) else data
     if not isinstance(rows, list):
@@ -59,7 +57,7 @@ def parse_mappings(payload: str, claim_count: int, vocabulary: dict) -> list[dic
     return mappings
 
 
-def _clean(index: int, row: dict, classes: set, properties: set, individuals: set) -> dict:
+def _clean(index, row, classes, properties, individuals):
     subject = _side(row.get("subject"), classes, individuals)
     predicate = row.get("predicate") if isinstance(row.get("predicate"), dict) else {}
     obj = _side(row.get("object"), classes, individuals)
@@ -75,7 +73,7 @@ def _clean(index: int, row: dict, classes: set, properties: set, individuals: se
     }
 
 
-def _side(value, classes: set, individuals: set) -> dict:
+def _side(value, classes, individuals):
     side = value if isinstance(value, dict) else {}
     cls = side.get("ontology_class") or ""
     entity = side.get("ontology_entity") or ""
@@ -86,7 +84,7 @@ def _side(value, classes: set, individuals: set) -> dict:
     }
 
 
-def _json_text(payload: str) -> str:
+def _json_text(payload):
     stripped = payload.strip()
     if stripped.startswith("```"):
         stripped = re.sub(r"^```[a-zA-Z]*\n", "", stripped)

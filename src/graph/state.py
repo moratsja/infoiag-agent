@@ -1,7 +1,6 @@
 # Shared data for one run. Nodes return only the fields they change.
 # trace is appended. The other fields are replaced.
 
-from __future__ import annotations
 
 import operator
 from typing import Annotated, Literal, TypedDict

@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from src.config import DATA_RAW, ONTOLOGY_IRI, USER_PROMPTS, load_documents, load_reference_summaries
-from src.ontology.loader import list_class_names
-from src.ontology.loader import _load
+from src.ontology.loader import load_ontology
 from src.ontology import loader
 from src.ontology.queries import QUERIES, get_query, select_queries
 from src.ontology.tools import run_query
@@ -44,12 +43,8 @@ def test_missing_ontology_is_reported_on_the_result(monkeypatch):
 
 def test_project_ontology_returns_the_christmas_holiday():
     assert "projectOntology#" in ONTOLOGY_IRI
-    _load.cache_clear()
-    try:
-        holiday = run_query(get_query("q5_america_recognizes_christmas"))
-        names = list_class_names()
-    finally:
-        _load.cache_clear()
+    holiday = run_query(get_query("q5_america_recognizes_christmas"))
+    names = sorted(cls.name for cls in load_ontology().classes())
     assert holiday["status"] == "ok", holiday["detail"]
     assert {"country": "america", "holiday": "christmas"} in holiday["rows"]
     assert "PublicHolidayEvent" in names

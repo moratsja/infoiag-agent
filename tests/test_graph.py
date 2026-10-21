@@ -1,7 +1,7 @@
 from src.graph.graph import build_baseline_graph, build_graph
 
 
-def _names(graph) -> set[str]:
+def _names(graph):
     return set(graph.get_graph().nodes)
 
 

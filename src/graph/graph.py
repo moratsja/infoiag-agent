@@ -1,15 +1,12 @@
-# Agent: tweets -> summary -> claims -> ontology mapping -> fixed SPARQL -> check.
-# A failed check rewrites once, then the new summary is checked again.
+# Agent: summary, claims, mapping, fixed query, check.
+# No claims, or no inconsistent claim: stop.
+# One inconsistent claim can be rewritten once, then checked again.
 # The baseline graph is only the summary step.
-
-from __future__ import annotations
-
-from typing import Literal
 
 from langgraph.graph import END, START, StateGraph
 
 from src.config import MAX_REVISIONS, SUMMARY_SENTENCES
-from src.graph.routing import route_after_evaluate
+from src.graph.routing import route_after_evaluate, route_after_extract
 from src.graph.state import AgentState
 from src.nodes.evaluate import evaluate
 from src.nodes.claims import extract_claims
@@ -30,7 +27,11 @@ def build_graph():
 
     builder.add_edge(START, "summarize")
     builder.add_edge("summarize", "extract_claims")
-    builder.add_edge("extract_claims", "ontology_mapping")
+    builder.add_conditional_edges(
+        "extract_claims",
+        route_after_extract,
+        {"ontology_mapping": "ontology_mapping", "end": END},
+    )
     builder.add_edge("ontology_mapping", "select_query")
     builder.add_edge("select_query", "evaluate")
     builder.add_conditional_edges(
@@ -51,14 +52,14 @@ def build_baseline_graph():
 
 
 def initial_state(
-    documents: list[dict[str, str]],
-    user_prompt: str,
-    topic: str,
-    prompt_id: str = "",
-    k: int = SUMMARY_SENTENCES,
-    mode: Literal["agent", "baseline"] = "agent",
-    max_revisions: int = MAX_REVISIONS,
-) -> AgentState:
+    documents,
+    user_prompt,
+    topic,
+    prompt_id = "",
+    k = SUMMARY_SENTENCES,
+    mode = "agent",
+    max_revisions = MAX_REVISIONS,
+):
     return {
         "topic": topic,
         "documents": documents,
@@ -81,6 +82,6 @@ def initial_state(
     }
 
 
-def draw_mermaid(mode: str = "agent") -> str:
+def draw_mermaid(mode = "agent"):
     graph = build_baseline_graph() if mode == "baseline" else build_graph()
     return graph.get_graph().draw_mermaid()

@@ -2,177 +2,243 @@
   "topic": "Christmas",
   "prompt_id": "prompt_christmas",
   "mode": "agent",
-  "summary": "Christmas in the United States is a time for gift-giving, family gatherings, and enjoying festive decorations. Many people express gratitude and happiness for the presents they receive, with some appreciating the thoughtful gifts that bring joy and comfort during the season. However, not everyone shares the same enthusiasm; some individuals express frustration over the commercialization and the weight gain associated with holiday indulgence. The holiday also brings about a sense of nostalgia and attachment to traditions, such as keeping Christmas trees up longer than usual. Across different social groups, there are varying sentiments, but the spirit of Christmas often revolves around sharing joy, spending time with loved ones, and enjoying the festive atmosphere.",
+  "summary": "Christmas in the United States is recognized as a public holiday, providing a break from regular routines, which allows for relaxation and indulgence. Many people enjoy the festive spirit of the season, participating in activities like decorating Christmas trees, wearing themed outfits, and exchanging presents. Posts reflect a variety of experiences, including gratitude for gifts, humor about holiday indulgence, and emotional attachment to decorations. Some individuals express enjoyment of the break, while others humorously acknowledge gaining weight or spending more time on leisure activities. Christmas is also a time for social connection and expressing love and appreciation for friends and family, strengthening bonds and creating lasting memories.",
   "issues": [],
   "claims": [
     {
-      "subject": "Christmas in the United States",
-      "predicate": "is",
-      "object": "a time for gift-giving, family gatherings, and enjoying festive decorations",
+      "subject": "Christmas",
+      "predicate": "is recognized as",
+      "object": "a public holiday in the United States",
       "scope": "general",
       "claim_type": "factual",
       "relevant_entities": [
         "Christmas",
         "United States"
       ],
-      "text": "Christmas in the United States is a time for gift-giving, family gatherings, and enjoying festive decorations."
+      "text": "Christmas in the United States is recognized as a public holiday, providing a break from regular routines, which allows for relaxation and indulgence."
     },
     {
       "subject": "Many people",
-      "predicate": "express",
-      "object": "gratitude and happiness for the presents they receive",
+      "predicate": "enjoy",
+      "object": "the festive spirit of the season",
       "scope": "many",
       "claim_type": "attitude",
-      "relevant_entities": [
-        "Many people"
-      ],
-      "text": "Many people express gratitude and happiness for the presents they receive, with some appreciating the thoughtful gifts that bring joy and comfort during the season."
+      "relevant_entities": [],
+      "text": "Many people enjoy the festive spirit of the season, participating in activities like decorating Christmas trees, wearing themed outfits, and exchanging presents."
+    },
+    {
+      "subject": "Posts",
+      "predicate": "reflect",
+      "object": "a variety of experiences",
+      "scope": "general",
+      "claim_type": "observation",
+      "relevant_entities": [],
+      "text": "Posts reflect a variety of experiences, including gratitude for gifts, humor about holiday indulgence, and emotional attachment to decorations."
     },
     {
       "subject": "Some individuals",
       "predicate": "express",
-      "object": "frustration over the commercialization and the weight gain associated with holiday indulgence",
+      "object": "enjoyment of the break",
       "scope": "some",
       "claim_type": "attitude",
-      "relevant_entities": [
-        "Some individuals"
-      ],
-      "text": "However, not everyone shares the same enthusiasm; some individuals express frustration over the commercialization and the weight gain associated with holiday indulgence."
+      "relevant_entities": [],
+      "text": "Some individuals express enjoyment of the break, while others humorously acknowledge gaining weight or spending more time on leisure activities."
     },
     {
-      "subject": "The holiday",
-      "predicate": "brings about",
-      "object": "a sense of nostalgia and attachment to traditions",
+      "subject": "Christmas",
+      "predicate": "is",
+      "object": "a time for social connection and expressing love and appreciation for friends and family",
       "scope": "general",
-      "claim_type": "observation",
+      "claim_type": "factual",
       "relevant_entities": [
-        "The holiday"
+        "Christmas"
       ],
-      "text": "The holiday also brings about a sense of nostalgia and attachment to traditions, such as keeping Christmas trees up longer than usual."
+      "text": "Christmas is also a time for social connection and expressing love and appreciation for friends and family, strengthening bonds and creating lasting memories."
+    }
+  ],
+  "mapped_claims": [
+    {
+      "claim_index": 0,
+      "ontology_relevant": true,
+      "subject": {
+        "text": "Christmas",
+        "ontology_class": "PublicHolidayEvent",
+        "ontology_entity": "christmas"
+      },
+      "predicate": {
+        "text": "is recognized as",
+        "ontology_property": "isRecognisedBy"
+      },
+      "object": {
+        "text": "the United States",
+        "ontology_class": "Country",
+        "ontology_entity": "america"
+      }
     },
     {
-      "subject": "The spirit of Christmas",
-      "predicate": "often revolves around",
-      "object": "sharing joy, spending time with loved ones, and enjoying the festive atmosphere",
-      "scope": "general",
-      "claim_type": "observation",
-      "relevant_entities": [
-        "The spirit of Christmas"
-      ],
-      "text": "Across different social groups, there are varying sentiments, but the spirit of Christmas often revolves around sharing joy, spending time with loved ones, and enjoying the festive atmosphere."
+      "claim_index": 1,
+      "ontology_relevant": false,
+      "subject": {
+        "text": "Many people",
+        "ontology_class": "",
+        "ontology_entity": ""
+      },
+      "predicate": {
+        "text": "enjoy",
+        "ontology_property": ""
+      },
+      "object": {
+        "text": "the festive spirit of the season",
+        "ontology_class": "",
+        "ontology_entity": ""
+      }
+    },
+    {
+      "claim_index": 2,
+      "ontology_relevant": false,
+      "subject": {
+        "text": "Posts",
+        "ontology_class": "",
+        "ontology_entity": ""
+      },
+      "predicate": {
+        "text": "reflect",
+        "ontology_property": ""
+      },
+      "object": {
+        "text": "a variety of experiences",
+        "ontology_class": "",
+        "ontology_entity": ""
+      }
+    },
+    {
+      "claim_index": 3,
+      "ontology_relevant": false,
+      "subject": {
+        "text": "Some individuals",
+        "ontology_class": "",
+        "ontology_entity": ""
+      },
+      "predicate": {
+        "text": "express",
+        "ontology_property": ""
+      },
+      "object": {
+        "text": "enjoyment of the break",
+        "ontology_class": "",
+        "ontology_entity": ""
+      }
+    },
+    {
+      "claim_index": 4,
+      "ontology_relevant": false,
+      "subject": {
+        "text": "Christmas",
+        "ontology_class": "",
+        "ontology_entity": ""
+      },
+      "predicate": {
+        "text": "is",
+        "ontology_property": ""
+      },
+      "object": {
+        "text": "a time for social connection and expressing love and appreciation for friends and family",
+        "ontology_class": "",
+        "ontology_entity": ""
+      }
     }
   ],
   "claim_evaluations": [
     {
       "status": "NOT_VERIFIABLE",
       "query_id": "",
-      "message": "The ontology has no relation for 'Christmas in the United States is a time for gift-giving, family gatherings, and enjoying festive decorations'. An empty lookup does not prove the claim false.",
+      "message": "The holiday-recognition query returned no rows, so the claim is not established.",
       "claim": {
-        "subject": "Christmas in the United States",
-        "predicate": "is",
-        "object": "a time for gift-giving, family gatherings, and enjoying festive decorations",
+        "subject": "Christmas",
+        "predicate": "is recognized as",
+        "object": "a public holiday in the United States",
         "scope": "general",
         "claim_type": "factual",
         "relevant_entities": [
           "Christmas",
           "United States"
         ],
-        "text": "Christmas in the United States is a time for gift-giving, family gatherings, and enjoying festive decorations."
+        "text": "Christmas in the United States is recognized as a public holiday, providing a break from regular routines, which allows for relaxation and indulgence."
       }
     },
     {
       "status": "NOT_VERIFIABLE",
       "query_id": "",
-      "message": "The ontology has no relation for 'Many people express gratitude and happiness for the presents they receive'. An empty lookup does not prove the claim false.",
+      "message": "The ontology has no relation for 'Many people enjoy the festive spirit of the season'. An empty lookup does not prove the claim false.",
       "claim": {
         "subject": "Many people",
-        "predicate": "express",
-        "object": "gratitude and happiness for the presents they receive",
+        "predicate": "enjoy",
+        "object": "the festive spirit of the season",
         "scope": "many",
         "claim_type": "attitude",
-        "relevant_entities": [
-          "Many people"
-        ],
-        "text": "Many people express gratitude and happiness for the presents they receive, with some appreciating the thoughtful gifts that bring joy and comfort during the season."
+        "relevant_entities": [],
+        "text": "Many people enjoy the festive spirit of the season, participating in activities like decorating Christmas trees, wearing themed outfits, and exchanging presents."
       }
     },
     {
       "status": "NOT_VERIFIABLE",
       "query_id": "",
-      "message": "The ontology has no relation for 'Some individuals express frustration over the commercialization and the weight gain associated with holiday indulgence'. An empty lookup does not prove the claim false.",
+      "message": "The ontology has no relation for 'Posts reflect a variety of experiences'. An empty lookup does not prove the claim false.",
+      "claim": {
+        "subject": "Posts",
+        "predicate": "reflect",
+        "object": "a variety of experiences",
+        "scope": "general",
+        "claim_type": "observation",
+        "relevant_entities": [],
+        "text": "Posts reflect a variety of experiences, including gratitude for gifts, humor about holiday indulgence, and emotional attachment to decorations."
+      }
+    },
+    {
+      "status": "NOT_VERIFIABLE",
+      "query_id": "",
+      "message": "The ontology has no relation for 'Some individuals express enjoyment of the break'. An empty lookup does not prove the claim false.",
       "claim": {
         "subject": "Some individuals",
         "predicate": "express",
-        "object": "frustration over the commercialization and the weight gain associated with holiday indulgence",
+        "object": "enjoyment of the break",
         "scope": "some",
         "claim_type": "attitude",
-        "relevant_entities": [
-          "Some individuals"
-        ],
-        "text": "However, not everyone shares the same enthusiasm; some individuals express frustration over the commercialization and the weight gain associated with holiday indulgence."
+        "relevant_entities": [],
+        "text": "Some individuals express enjoyment of the break, while others humorously acknowledge gaining weight or spending more time on leisure activities."
       }
     },
     {
       "status": "NOT_VERIFIABLE",
       "query_id": "",
-      "message": "The ontology has no relation for 'The holiday brings about a sense of nostalgia and attachment to traditions'. An empty lookup does not prove the claim false.",
+      "message": "The ontology has no relation for 'Christmas is a time for social connection and expressing love and appreciation for friends and family'. An empty lookup does not prove the claim false.",
       "claim": {
-        "subject": "The holiday",
-        "predicate": "brings about",
-        "object": "a sense of nostalgia and attachment to traditions",
+        "subject": "Christmas",
+        "predicate": "is",
+        "object": "a time for social connection and expressing love and appreciation for friends and family",
         "scope": "general",
-        "claim_type": "observation",
+        "claim_type": "factual",
         "relevant_entities": [
-          "The holiday"
+          "Christmas"
         ],
-        "text": "The holiday also brings about a sense of nostalgia and attachment to traditions, such as keeping Christmas trees up longer than usual."
-      }
-    },
-    {
-      "status": "NOT_VERIFIABLE",
-      "query_id": "",
-      "message": "The ontology has no relation for 'The spirit of Christmas often revolves around sharing joy, spending time with loved ones, and enjoying the festive atmosphere'. An empty lookup does not prove the claim false.",
-      "claim": {
-        "subject": "The spirit of Christmas",
-        "predicate": "often revolves around",
-        "object": "sharing joy, spending time with loved ones, and enjoying the festive atmosphere",
-        "scope": "general",
-        "claim_type": "observation",
-        "relevant_entities": [
-          "The spirit of Christmas"
-        ],
-        "text": "Across different social groups, there are varying sentiments, but the spirit of Christmas often revolves around sharing joy, spending time with loved ones, and enjoying the festive atmosphere."
+        "text": "Christmas is also a time for social connection and expressing love and appreciation for friends and family, strengthening bonds and creating lasting memories."
       }
     }
   ],
-  "revision": 0,
+  "revision": 1,
   "passed": true,
   "trace": [
     "summarize",
     "extract_claims",
-    "query_ontology",
+    "ontology_mapping",
+    "select_query",
+    "evaluate",
+    "rewrite",
+    "extract_claims",
+    "ontology_mapping",
+    "select_query",
     "evaluate"
   ],
-  "elapsed_seconds": 6.65,
-  "query_results": [
-    {
-      "query_id": "q1_americans_not_celebrating_christmas",
-      "manchester": "Person and (isCitizenOf value America) and not (isParticipantOf value christmas)",
-      "status": "ok",
-      "detail": "sparql-closed-world",
-      "rows": []
-    },
-    {
-      "query_id": "q5_america_recognizes_christmas",
-      "manchester": "america and (recognizesPublicHoliday value christmas)",
-      "status": "ok",
-      "detail": "sparql-closed-world",
-      "rows": [
-        {
-          "country": "america",
-          "holiday": "christmas"
-        }
-      ]
-    }
-  ]
+  "elapsed_seconds": 20.868,
+  "query_results": []
 }

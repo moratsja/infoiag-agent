@@ -1,11 +1,8 @@
-# Turn a claim into one of the fixed SPARQL queries. The model never writes the query.
-
-from __future__ import annotations
+# Pick one of the fixed SPARQL queries from a mapped claim. The model does not write SPARQL.
 
 import re
 
 from src.config import ONTOLOGY_IRI
-from src.graph.state import QueryResult
 from src.ontology.tools import run_sparql
 
 _LOCAL_NAMES = {
@@ -25,12 +22,12 @@ _LOCAL_NAMES = {
 _QUERY_INDIVIDUALS = {"america", "christmas"}
 
 
-def local_name(value: str) -> str:
+def local_name(value):
     key = re.sub(r"[^a-z0-9]", "", value.lower())
     return _LOCAL_NAMES.get(key, value.strip())
 
 
-def template_for_claim(claim: dict) -> str | None:
+def template_for_claim(claim):
     predicate = re.sub(r"[^a-z]", "", claim.get("predicate", "").lower())
     names = _names(claim)
     blob = f"{claim.get('predicate', '')} {claim.get('object', '')} {claim.get('text', '')}".lower()
@@ -42,12 +39,12 @@ def template_for_claim(claim: dict) -> str | None:
     return None
 
 
-def queries_for_claim(claim: dict) -> list[QueryResult]:
+def queries_for_claim(claim):
     template = template_for_claim(claim)
     return _run_template(template, claim)
 
 
-def queries_for_mapping(mapping: dict) -> tuple[str | None, list[QueryResult]]:
+def queries_for_mapping(mapping):
     # The property name comes from the mapper. Only these properties have a fixed query.
     if not mapping or not mapping.get("ontology_relevant"):
         return None, []
@@ -59,7 +56,7 @@ def queries_for_mapping(mapping: dict) -> tuple[str | None, list[QueryResult]]:
     return None, []
 
 
-def _run_template(template: str | None, source: dict) -> list[QueryResult]:
+def _run_template(template, source):
     if template == "recognizes_public_holiday":
         return [run_sparql("q5_america_recognizes_christmas", _holiday_sparql(), "recognizesPublicHoliday")]
     if template == "non_participant":
@@ -75,7 +72,7 @@ def _run_template(template: str | None, source: dict) -> list[QueryResult]:
     return []
 
 
-def _names(claim: dict) -> set[str]:
+def _names(claim):
     values = [
         claim.get("subject", ""),
         claim.get("object", ""),
@@ -91,7 +88,7 @@ def _names(claim: dict) -> set[str]:
     return names
 
 
-def _individual(claim: dict) -> str | None:
+def _individual(claim):
     for candidate in (claim.get("subject", ""), *claim.get("relevant_entities", [])):
         name = local_name(candidate)
         if name in _QUERY_INDIVIDUALS:
@@ -99,14 +96,14 @@ def _individual(claim: dict) -> str | None:
     return None
 
 
-def _holiday_sparql() -> str:
+def _holiday_sparql():
     return f"""PREFIX : <{ONTOLOGY_IRI}>
 SELECT ?country ?holiday WHERE {{
   ?country :recognizesPublicHoliday ?holiday .
 }}"""
 
 
-def _type_sparql(individual: str) -> str:
+def _type_sparql(individual):
     return f"""PREFIX : <{ONTOLOGY_IRI}>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT ?type WHERE {{

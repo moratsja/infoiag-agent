@@ -85,7 +85,7 @@ An empty successful query is not treated as a contradiction.
 cd infoiag-agent
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install .
 ```
 
 The ontology file is `ontology/ontologyStefan.rdf`. Model, sentence count, and rewrite limit are constants in `src/config.py`.
@@ -110,11 +110,6 @@ pytest
 
 `notebooks/experiments.ipynb` prints the Mermaid diagram and the registered queries.
 
-## Evaluation to add for the final report
+## Evaluation
 
-The agent loop records issues and seconds. These metrics are not computed yet:
-
-- Equal Coverage for group fairness on DivSumm.
-- `mean_jaccard_by_group` in `src/nodes/evaluate.py` is a lexical stand-in for the optional per-group similarity check. It is not Equal Coverage, and it does not drive the rewrite.
-- ROUGE against the human reference summaries.
-- A quality metric such as BARTScore or a groundedness judge.
+Not implemented. Group labels stay on the tweets for a later check. The agent loop only records the ontology verdicts and the runtime.
