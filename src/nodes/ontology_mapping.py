@@ -4,6 +4,7 @@
 import json
 import re
 
+from src.ontology.reasoner import claim_shape
 from src.ontology.vocabulary import load_vocabulary
 
 MAPPER_SYSTEM_PROMPT = """You map extracted summary claims to an ontology vocabulary.
@@ -15,8 +16,14 @@ Each mapping is one object with claim_index, ontology_relevant, and nested subje
 subject and object each have text, ontology_class, and ontology_entity.
 predicate has text and ontology_property.
 Use "" when a field has no match.
+A class membership leaves ontology_property and the object entity empty, and puts the class in ontology_class.
+A relation puts the property name in ontology_property and individuals in both ontology_entity fields.
+If the claim does not fit exactly one of those shapes, set ontology_relevant to false.
 Example:
-{"mappings": [{"claim_index": 0, "ontology_relevant": true, "subject": {"text": "America", "ontology_class": "Country", "ontology_entity": "america"}, "predicate": {"text": "recognizes", "ontology_property": "recognizesPublicHoliday"}, "object": {"text": "Christmas", "ontology_class": "PublicHolidayEvent", "ontology_entity": "christmas"}}]}
+{"mappings": [
+ {"claim_index": 0, "ontology_relevant": true, "subject": {"text": "America", "ontology_class": "Country", "ontology_entity": "america"}, "predicate": {"text": "recognizes", "ontology_property": "recognizesPublicHoliday"}, "object": {"text": "Christmas", "ontology_class": "", "ontology_entity": "christmas"}},
+ {"claim_index": 1, "ontology_relevant": true, "subject": {"text": "Christmas", "ontology_class": "", "ontology_entity": "christmas"}, "predicate": {"text": "is a", "ontology_property": ""}, "object": {"text": "sporting competition event", "ontology_class": "SportingCompetitionEvent", "ontology_entity": ""}}
+]}
 """
 
 
@@ -63,14 +70,15 @@ def _clean(index, row, classes, properties, individuals):
     obj = _side(row.get("object"), classes, individuals)
     prop = predicate.get("ontology_property") or ""
     prop = prop if prop in properties else ""
-    relevant = bool(row.get("ontology_relevant")) and bool(prop or subject["ontology_entity"] or obj["ontology_entity"] or subject["ontology_class"] or obj["ontology_class"])
-    return {
+    mapping = {
         "claim_index": index,
-        "ontology_relevant": relevant,
+        "ontology_relevant": False,
         "subject": subject,
         "predicate": {"text": str(predicate.get("text") or ""), "ontology_property": prop},
         "object": obj,
     }
+    mapping["ontology_relevant"] = claim_shape(mapping) is not None
+    return mapping
 
 
 def _side(value, classes, individuals):

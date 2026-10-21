@@ -97,7 +97,7 @@ def extract_claims(state):
         "trace": ["extract_claims"],
     }
     if not dumped:
-        update["passed"] = True
+        update["passed"] = False
         update["issues"] = []
         update["claim_evaluations"] = []
     return update

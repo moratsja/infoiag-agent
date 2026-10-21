@@ -4,16 +4,6 @@ from src.nodes.evaluate import evaluate
 from src.nodes.extract import extract_summary, format_documents
 
 
-def _hit(query_id, rows):
-    return {
-        "query_id": query_id,
-        "manchester": "",
-        "status": "ok",
-        "detail": "test",
-        "rows": rows,
-    }
-
-
 def test_extract_splits_summary_sentences():
     state = initial_state(
         documents=[
@@ -48,8 +38,10 @@ def test_inconsistent_claim_rewrites_once_then_stops():
     state["query_results_by_claim"] = [
         {
             "claim_index": 0,
-            "template": "individual_type",
-            "results": [_hit("individual_type:christmas", [{"type": "PublicHolidayEvent"}])],
+            "template": "type",
+            "status": "CONTRADICTED",
+            "message": "Adding christmas type SportingCompetitionEvent makes the ontology inconsistent.",
+            "results": [],
         }
     ]
     checked = evaluate(state)
@@ -57,7 +49,7 @@ def test_inconsistent_claim_rewrites_once_then_stops():
     assert checked["claim_evaluations"][0]["status"] == "CONTRADICTED"
     assert route_after_evaluate({**state, **checked}) == "rewrite"
     assert route_after_evaluate({**state, **checked, "revision": 1}) == "end"
-    assert route_after_evaluate({**state, "passed": True, "revision": 0}) == "end"
+    assert route_after_evaluate({**state, "passed": True, "issues": [], "revision": 0}) == "end"
 
 
 def test_not_verifiable_claim_does_not_rewrite():
@@ -73,9 +65,17 @@ def test_not_verifiable_claim_does_not_rewrite():
     }
     state["summary"] = claim["text"]
     state["claims"] = [claim]
-    state["query_results_by_claim"] = [{"claim_index": 0, "results": []}]
+    state["query_results_by_claim"] = [
+        {
+            "claim_index": 0,
+            "template": None,
+            "status": "NOT_VERIFIABLE",
+            "message": "This claim is not a class membership or an object property between individuals.",
+            "results": [],
+        }
+    ]
     checked = evaluate(state)
-    assert checked["passed"] is True
+    assert checked["passed"] is False
     assert checked["claim_evaluations"][0]["status"] == "NOT_VERIFIABLE"
     assert checked["issues"] == []
     assert route_after_evaluate({**state, **checked}) == "end"

@@ -32,11 +32,12 @@ def rewrite(state):
             "Posts:",
             format_documents(state["documents"]),
             "",
-            "Rewrite the summary.",
-            "Fix the claims marked CONTRADICTED, using the query results.",
-            "Keep claims marked SUPPORTED.",
-            "Leave NOT_VERIFIABLE claims as they are.",
-            "Stay with what the posts say. Do not invent facts.",
+            f"Rewrite the summary in exactly {state['k']} sentences.",
+            "Fix only the claims marked CONTRADICTED.",
+            "The reason each one conflicts with the ontology is under Problems to fix.",
+            "Keep claims marked SUPPORTED, including ontology facts that were entailed.",
+            "Leave claims marked NOT_VERIFIABLE unchanged, unless the posts themselves do not support them.",
+            "Use the posts for what people wrote. Do not add facts that are not in the posts or in a SUPPORTED check.",
             "Return only the revised summary.",
         ]
     )

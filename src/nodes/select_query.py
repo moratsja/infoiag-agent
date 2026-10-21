@@ -1,7 +1,7 @@
-# Pick a fixed SPARQL query from the mapping and run it.
-# A claim with no known property is left unchecked. No query is invented.
+# Run the HermiT check for each mapped claim.
+# The model does not write SPARQL. One claim is not judged from another claim's row.
 
-from src.ontology.claim_queries import queries_for_mapping
+from src.ontology.reasoner import check_mapping
 
 
 def select_query(state):
@@ -11,22 +11,25 @@ def select_query(state):
     results = []
     for index, _claim in enumerate(claims):
         mapping = mappings[index] if index < len(mappings) else {}
-        template, query_results = queries_for_mapping(mapping)
-        by_claim.append({"claim_index": index, "template": template, "results": query_results})
-        results.extend(query_results)
+        if isinstance(mapping, dict) and "claim_index" not in mapping:
+            mapping = {**mapping, "claim_index": index}
+        verdict = check_mapping(mapping)
+        by_claim.append({
+            "claim_index": index,
+            "template": verdict["template"],
+            "status": verdict["status"],
+            "message": verdict["message"],
+            "results": [],
+        })
+        results.append({
+            "query_id": verdict["template"] or "",
+            "manchester": "",
+            "status": "error" if verdict["message"].startswith("Reasoner error") or "inconsistent before" in verdict["message"] else "ok",
+            "detail": verdict["message"],
+            "rows": [],
+        })
     return {
-        "query_results": _merge_results(results),
+        "query_results": results,
         "query_results_by_claim": by_claim,
         "trace": ["select_query"],
     }
-
-
-def _merge_results(results):
-    merged = []
-    seen = set()
-    for item in results:
-        if item["query_id"] in seen:
-            continue
-        merged.append(item)
-        seen.add(item["query_id"])
-    return merged

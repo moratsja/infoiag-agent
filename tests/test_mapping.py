@@ -35,10 +35,27 @@ def test_parse_mappings_drops_invented_names():
     assert mapping["predicate"]["ontology_property"] == ""
     assert mapping["subject"]["ontology_class"] == ""
     assert mapping["subject"]["ontology_entity"] == "america"
+    assert mapping["claim_index"] == 0
+    assert mapping["ontology_relevant"] is False
+
+
+def test_type_mapping_is_kept_when_the_class_is_known():
+    vocabulary = load_vocabulary()
+    payload = """
+    {"mappings": [{
+      "claim_index": 0,
+      "ontology_relevant": true,
+      "subject": {"text": "Christmas", "ontology_class": "", "ontology_entity": "christmas"},
+      "predicate": {"text": "is a", "ontology_property": ""},
+      "object": {"text": "a public holiday", "ontology_class": "PublicHolidayEvent", "ontology_entity": ""}
+    }]}
+    """
+    mapping = parse_mappings(payload, 1, vocabulary)[0]
     assert mapping["ontology_relevant"] is True
+    assert mapping["object"]["ontology_class"] == "PublicHolidayEvent"
 
 
-def test_select_query_runs_the_holiday_query_for_that_property():
+def test_select_query_checks_the_mapped_holiday_pair():
     state = {
         "claims": [{"subject": "America", "predicate": "recognizes", "object": "Christmas"}],
         "mapped_claims": [
@@ -52,9 +69,10 @@ def test_select_query_runs_the_holiday_query_for_that_property():
         ],
     }
     result = select_query(state)
-    assert result["query_results_by_claim"][0]["template"] == "recognizes_public_holiday"
-    rows = result["query_results"][0]["rows"]
-    assert {"country": "america", "holiday": "christmas"} in rows
+    checked = result["query_results_by_claim"][0]
+    assert checked["claim_index"] == 0
+    assert checked["template"] == "relation"
+    assert checked["status"] == "SUPPORTED"
 
 
 def test_unknown_property_does_not_run_a_query():
@@ -70,5 +88,6 @@ def test_unknown_property_does_not_run_a_query():
         ],
     }
     result = select_query(state)
-    assert result["query_results"] == []
-    assert result["query_results_by_claim"][0]["template"] is None
+    checked = result["query_results_by_claim"][0]
+    assert checked["template"] is None
+    assert checked["status"] == "NOT_VERIFIABLE"

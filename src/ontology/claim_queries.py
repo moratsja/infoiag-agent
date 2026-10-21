@@ -1,4 +1,6 @@
-# Pick one of the fixed SPARQL queries from a mapped claim. The model does not write SPARQL.
+# Fixed SPARQL lookups. These are not OWL verdicts.
+# q1 uses FILTER NOT EXISTS, which is closed-world: a missing row is not an OWL negation.
+# Claim status comes from src.ontology.reasoner, which checks the mapped subject and object.
 
 import re
 

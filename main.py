@@ -72,6 +72,8 @@ def _print_run(run_index, result, elapsed):
             print("issues:")
             for issue in result["issues"]:
                 print(f"- [{issue['kind']}] {issue['message']}")
+        if result["issues"] and result["revision"] >= result["max_revisions"]:
+            print("Contradictions remain after the rewrite limit. Validation did not succeed.")
         errors = [item for item in result["query_results"] if item["status"] == "error"]
         for item in errors:
             print(f"query error {item['query_id']}: {item['detail']}")

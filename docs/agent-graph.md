@@ -49,25 +49,27 @@ The model still does not write the query.
 
 ### 4. select_query
 
-Python looks at the relation the mapper picked and runs one fixed query, or none.
+Python asks HermiT about the mapped claim. The model does not write a query.
 
-| Mapped property | Query | What we get back |
-| --- | --- | --- |
-| `recognizesPublicHoliday` | Which country recognizes which public holiday? | `america` recognizes `christmas`. |
-| `isParticipantOf` or `hasParticipant` | Is there an American in the file who does not take part in Christmas? | Nobody. The file has no such person. |
-| anything else | No query | We do not check this claim on the ontology. |
+Two shapes are checked. An individual can belong to a class, such as `christmas` type `Event`. Or two individuals can be linked by an object property, such as `america recognizesPublicHoliday christmas`. The subject and object of that claim are the ones that are checked. A row about America is not reused for a different pair.
+
+Anything else is not verifiable. SPARQL can still list stored triples. A `FILTER NOT EXISTS` query is closed-world and is not used as an OWL negation.
 
 ### 5. evaluate
 
-Each claim gets a label. Supported means the query found that fact. Contradicted means the ontology says something else. Not verifiable means there was no query, or the query came back empty.
+Each claim gets a label from HermiT.
 
-A not-verifiable claim is kept in the log. It does not start a rewrite. “Americans love Christmas” is not verifiable, because the ontology has no relation for that.
+Supported means the ontology entails the claim. Contradicted means adding the claim makes a consistent ontology inconsistent. Not verifiable means neither the claim nor its negation is established. A reasoner error is reported in the message and is not called a contradiction.
+
+A not-verifiable claim does not start a rewrite. `passed` is true only when every claim is supported. “Americans love Christmas” is not verifiable, because a public holiday is not a feeling.
+
+The file does not say that a public holiday and a sporting competition are disjoint. The checker adds that axiom only on a temporary copy, so the sporting-competition example can be contradicted. That axiom is a modelling assumption for the proof of concept.
 
 ### 6. rewrite, or stop
 
-A rewrite happens only when a claim is contradicted, and only once. The new summary goes through claim extraction again, and then the run stops.
+A rewrite happens only when a claim is contradicted, and at most once. The new summary is extracted, mapped, and checked again.
 
-If nothing is contradicted, the run stops immediately.
+If nothing is contradicted, the run stops. If a contradiction is still there after that rewrite, `passed` stays false.
 
 ## Where this gets stuck
 
