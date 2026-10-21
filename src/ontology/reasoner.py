@@ -1,6 +1,4 @@
-# Check one mapped claim with Owlready2's reasoner.
-# That call runs the HermiT jar shipped with Owlready2, so the java command has to exist.
-# The RDF file is not changed. A claim is a class membership or an object property.
+# Owlready2's sync_reasoner runs HermiT, so java has to be installed.
 
 import shutil
 from pathlib import Path
@@ -12,9 +10,7 @@ from src.config import ONTOLOGY_PATH
 
 _BEFORE = "The ontology is inconsistent before the claim is added, so the claim is not classified."
 
-
 def _java_command():
-    # Owlready2 starts HermiT with this executable. Prefer java on PATH.
     found = shutil.which("java")
     if found:
         return found
@@ -24,9 +20,7 @@ def _java_command():
         return str(matches[-1])
     return "java"
 
-
 owlready2.JAVA_EXE = _java_command()
-
 
 def claim_shape(mapping):
     if not mapping:
@@ -41,7 +35,6 @@ def claim_shape(mapping):
     if subject and object_class and not prop and not object_entity:
         return "type"
     return None
-
 
 def check_mapping(mapping):
     shape = claim_shape(mapping)
@@ -62,7 +55,6 @@ def check_mapping(mapping):
     except Exception as exc:
         return _result("NOT_VERIFIABLE", shape, f"Reasoner error: {type(exc).__name__}: {exc}")
 
-
 def _check_type(individual_name, class_name):
     world, onto = _load_world()
     if getattr(onto, individual_name, None) is None:
@@ -72,8 +64,6 @@ def _check_type(individual_name, class_name):
     ok, problem = _run(world)
     if problem or not ok:
         return _result("NOT_VERIFIABLE", "type", problem or _BEFORE)
-
-    # Entailed when the ontology plus the negation is inconsistent.
     world, onto = _load_world()
     with onto:
         getattr(onto, individual_name).is_a.append(Not(getattr(onto, class_name)))
@@ -82,7 +72,6 @@ def _check_type(individual_name, class_name):
         return _result("NOT_VERIFIABLE", "type", problem)
     if entailed:
         return _result("SUPPORTED", "type", f"The reasoner finds that {individual_name} type {class_name} follows.")
-
     world, onto = _load_world()
     with onto:
         getattr(onto, individual_name).is_a.append(getattr(onto, class_name))
@@ -101,7 +90,6 @@ def _check_type(individual_name, class_name):
         f"The ontology does not entail {individual_name} type {class_name}, and adding it stays consistent.",
     )
 
-
 def _check_relation(subject_name, prop_name, object_name):
     world, onto = _load_world()
     if getattr(onto, subject_name, None) is None or getattr(onto, object_name, None) is None:
@@ -115,7 +103,6 @@ def _check_relation(subject_name, prop_name, object_name):
         return _result("NOT_VERIFIABLE", "relation", problem or _BEFORE)
     if getattr(onto, object_name) in list(getattr(getattr(onto, subject_name), prop_name)):
         return _result("SUPPORTED", "relation", f"The reasoner finds that {subject_name} {prop_name} {object_name} holds.")
-
     world, onto = _load_world()
     with onto:
         getattr(getattr(onto, subject_name), prop_name).append(getattr(onto, object_name))
@@ -134,12 +121,10 @@ def _check_relation(subject_name, prop_name, object_name):
         f"The ontology does not entail {subject_name} {prop_name} {object_name}. A different pair is not used as evidence.",
     )
 
-
 def _load_world():
     world = World()
     onto = world.get_ontology(str(ONTOLOGY_PATH)).load()
     return world, onto
-
 
 def _run(world):
     try:
@@ -150,13 +135,11 @@ def _run(world):
         return False, f"Reasoner error: {type(exc).__name__}: {exc}"
     return True, None
 
-
 def _inconsistent(world):
     consistent, problem = _run(world)
     if problem:
         return False, problem
     return (not consistent), None
-
 
 def _result(status, template, message):
     return {"status": status, "template": template, "message": message}

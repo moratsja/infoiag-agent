@@ -1,14 +1,9 @@
-# First summary is written from the tweets. The ontology check happens after this step.
-
-
 from src.llm.model import complete
 from src.nodes.extract import format_documents
-
 
 def summarize(state):
     summary = complete("", _user_message(state))
     return {"summary": summary, "trace": ["summarize"]}
-
 
 def _user_message(state):
     tweets = format_documents(state["documents"])

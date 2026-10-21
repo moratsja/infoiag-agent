@@ -1,6 +1,3 @@
-# Map each claim onto classes, properties, and individuals from the vocabulary.
-# The model does not write SPARQL, and it may not invent names.
-
 import json
 import re
 
@@ -24,9 +21,9 @@ Example:
 {"mappings": [
  {"claim_index": 0, "ontology_relevant": true, "subject": {"text": "Eva", "ontology_class": "", "ontology_entity": "evaPerson"}, "predicate": {"text": "is a", "ontology_property": ""}, "object": {"text": "a person", "ontology_class": "Person", "ontology_entity": ""}},
  {"claim_index": 1, "ontology_relevant": true, "subject": {"text": "bread", "ontology_class": "", "ontology_entity": "breadFood"}, "predicate": {"text": "has ingredient", "ontology_property": "hasIngredient"}, "object": {"text": "flour", "ontology_class": "", "ontology_entity": "flourIngredient"}}
+
 ]}
 """
-
 
 def ontology_mapping(state):
     claims = state.get("claims") or []
@@ -49,7 +46,6 @@ def ontology_mapping(state):
     )
     return {"mapped_claims": parse_mappings(raw, len(claims), vocabulary), "trace": ["ontology_mapping"]}
 
-
 def parse_mappings(payload, claim_count, vocabulary):
     data = json.loads(_json_text(payload))
     rows = data["mappings"] if isinstance(data, dict) else data
@@ -63,7 +59,6 @@ def parse_mappings(payload, claim_count, vocabulary):
         row = rows[index] if index < len(rows) else {}
         mappings.append(_clean(index, row, classes, properties, individuals))
     return mappings
-
 
 def _clean(index, row, classes, properties, individuals):
     subject = _side(row.get("subject"), classes, individuals)
@@ -81,7 +76,6 @@ def _clean(index, row, classes, properties, individuals):
     mapping["ontology_relevant"] = claim_shape(mapping) is not None
     return mapping
 
-
 def _side(value, classes, individuals):
     side = value if isinstance(value, dict) else {}
     cls = side.get("ontology_class") or ""
@@ -91,7 +85,6 @@ def _side(value, classes, individuals):
         "ontology_class": cls if cls in classes else "",
         "ontology_entity": entity if entity in individuals else "",
     }
-
 
 def _json_text(payload):
     stripped = payload.strip()

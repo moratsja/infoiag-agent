@@ -1,5 +1,3 @@
-# Compact view of the RDF file for the mapper. Not the raw XML.
-
 from functools import lru_cache
 
 from rdflib import OWL, RDF, RDFS, Graph, URIRef
@@ -9,19 +7,15 @@ from src.config import ONTOLOGY_PATH
 
 _SKIP = {"Thing", "Nothing", "Class", "NamedIndividual", "ObjectProperty", "DatatypeProperty"}
 
-
 def local_name(uri):
     text = str(uri)
     if "#" in text:
         return text.split("#")[-1]
     return text.rstrip("/").split("/")[-1]
 
-
 def load_vocabulary(path=None):
-    # Classes, object properties, and individuals. Datatype properties are left out.
     target = str(path or ONTOLOGY_PATH)
     return _load(target)
-
 
 @lru_cache(maxsize=4)
 def _load(path):
@@ -32,7 +26,6 @@ def _load(path):
         "object_properties": _properties(graph),
         "individuals": _individuals(graph),
     }
-
 
 def _classes(graph):
     rows = []
@@ -52,7 +45,6 @@ def _classes(graph):
         rows.append({"name": name, "subclass_of": sorted(set(parents))})
     return sorted(rows, key=lambda row: row["name"])
 
-
 def _properties(graph):
     rows = []
     for prop in graph.subjects(RDF.type, OWL.ObjectProperty):
@@ -67,7 +59,6 @@ def _properties(graph):
         )
     return sorted(rows, key=lambda row: row["name"])
 
-
 def _individuals(graph):
     rows = []
     for individual in graph.subjects(RDF.type, OWL.NamedIndividual):
@@ -80,13 +71,11 @@ def _individuals(graph):
         rows.append({"name": local_name(individual), "classes": sorted(set(classes))})
     return sorted(rows, key=lambda row: row["name"])
 
-
 def _class_names(graph, nodes):
     names = []
     for node in nodes:
         names.extend(_names_from_node(graph, node))
     return sorted({name for name in names if name and name not in _SKIP})
-
 
 def _names_from_node(graph, node):
     if isinstance(node, URIRef):

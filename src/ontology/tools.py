@@ -1,9 +1,6 @@
-# Run a SPARQL string. A bad query comes back as status "error".
-
 import re
 
 from src.ontology.loader import load_ontology
-
 
 def run_sparql(query_id, sparql, manchester=""):
     try:
@@ -25,10 +22,8 @@ def run_sparql(query_id, sparql, manchester=""):
         "rows": rows,
     }
 
-
 def run_query(query):
     return run_sparql(query.id, query.sparql, query.manchester)
-
 
 def _run_sparql(onto, sparql):
     variables = _select_variables(sparql)
@@ -42,13 +37,11 @@ def _run_sparql(onto, sparql):
             rows.append({f"col_{index}": label for index, label in enumerate(labels)})
     return rows
 
-
 def _select_variables(sparql):
     match = re.search(r"SELECT\s+(.*?)\s+WHERE", sparql, flags=re.IGNORECASE | re.DOTALL)
     if not match:
         return []
     return [name[1:] for name in re.findall(r"\?\w+", match.group(1))]
-
 
 def _label(value):
     if value is None:

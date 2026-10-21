@@ -1,5 +1,3 @@
-# The model turns the summary into claims.
-
 import json
 import re
 
@@ -26,7 +24,6 @@ _TYPE_ALIASES = {
     "group-specific": "group",
     "group_specific": "group",
 }
-
 EXTRACT_SYSTEM_PROMPT = """Extract claims from the summary.
 Return only JSON: {"claims": [...]} with no markdown.
 Each claim has subject, predicate, object, scope, claim_type, relevant_entities, and text.
@@ -39,10 +36,8 @@ relevant_entities is a list of strings. text is the sentence the claim came from
 Do not add claims that are not in the summary.
 """
 
-
 class ClaimModel(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
-
     subject: str
     predicate: str
     obj: str = Field(default="", alias="object")
@@ -74,7 +69,6 @@ class ClaimModel(BaseModel):
             return [value]
         return [str(item) for item in value]
 
-
 def parse_claims(payload):
     data = json.loads(_json_text(payload))
     rows = data["claims"] if isinstance(data, dict) else data
@@ -82,10 +76,8 @@ def parse_claims(payload):
         raise ValueError("Claims payload must be a list or an object with a claims list.")
     return [ClaimModel.model_validate(row) for row in rows]
 
-
 def dump_claims(claims):
     return [claim.model_dump(by_alias=True) for claim in claims]
-
 
 def extract_claims(state):
     summary = state["summary"]
@@ -102,13 +94,11 @@ def extract_claims(state):
         update["claim_evaluations"] = []
     return update
 
-
 def _claims_for_summary(summary):
     from src.llm.model import complete
 
     raw = complete(EXTRACT_SYSTEM_PROMPT, f"Summary:\n{summary}")
     return parse_claims(raw)
-
 
 def _json_text(payload):
     stripped = payload.strip()

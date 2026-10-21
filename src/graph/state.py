@@ -1,16 +1,12 @@
-# Shared data for one run. Nodes return only the fields they change.
-# trace is appended. The other fields are replaced.
-
+# trace is appended. Other fields are replaced.
 
 import operator
 from typing import Annotated, Literal, TypedDict
-
 
 class Issue(TypedDict):
     kind: str
     query_id: str
     message: str
-
 
 class QueryResult(TypedDict):
     query_id: str
@@ -19,13 +15,11 @@ class QueryResult(TypedDict):
     detail: str
     rows: list[dict[str, str]]
 
-
 class ClaimEvaluation(TypedDict):
     status: Literal["SUPPORTED", "CONTRADICTED", "NOT_VERIFIABLE"]
     query_id: str
     message: str
     claim: dict
-
 
 class AgentState(TypedDict):
     topic: str

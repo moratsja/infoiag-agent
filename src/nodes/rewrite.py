@@ -1,11 +1,7 @@
-# One rewrite of the summary. The graph then extracts claims and checks again.
-
-
 import json
 
 from src.llm.model import complete
 from src.nodes.extract import format_documents
-
 
 def rewrite(state):
     user = "\n".join(

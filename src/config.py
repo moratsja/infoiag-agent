@@ -9,11 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_RAW = ROOT / "data" / "raw"
 DATA_PROCESSED = ROOT / "data" / "processed"
 DIVSUMM_DIR = DATA_RAW / "divsumm"
-
-load_dotenv(ROOT / ".env")  # only the OpenAI key lives here
-
-GROUPS = ("White", "Hisp", "AA")  # DivSumm group labels
-
+load_dotenv(ROOT / ".env")
+GROUPS = ("White", "Hisp", "AA")
 USER_PROMPTS = {
     "prompt_christmas": (
         "Summarise this text about Christmas in the United States. "
@@ -24,18 +21,16 @@ USER_PROMPTS = {
         "I want to know why people dislike Netflix."
     ),
 }
-
 OPENAI_MODEL = "gpt-4o"
 LLM_TEMPERATURE = 0.0
 ONTOLOGY_IRI = "http://www.semanticweb.org/ewill/ontologies/2026/8/projectOntology#"
 ONTOLOGY_PATH = ROOT / "ontology" / "ontologyStefan.rdf"
-MAX_REVISIONS = 1  # one rewrite, then stop
+MAX_REVISIONS = 1
 SUMMARY_SENTENCES = 5
 MAX_TWEETS = 90
 
-
 def load_documents(path):
-    # .txt is a DivSumm file (group, tab, tweet). .json is a small example.
+    # txt is group, tab, tweet. json is a list of tweets.
     if path.suffix.lower() == ".txt":
         documents = _load_txt(path)
     else:
@@ -44,9 +39,7 @@ def load_documents(path):
         raise ValueError(f"No tweets in {path}")
     return documents
 
-
 def load_reference_summaries(topic):
-    # Human summaries, used later for comparison. They do not drive the agent.
     folder = DIVSUMM_DIR / "abstractive"
     summaries = []
     for path in sorted(folder.glob(f"{topic}_Annotat*.txt")):
@@ -54,12 +47,10 @@ def load_reference_summaries(topic):
         summaries.append({"annotator": path.stem, "text": text})
     return summaries
 
-
 def _load_json(path):
     payload = json.loads(path.read_text(encoding="utf-8"))
     rows = payload["tweets"] if isinstance(payload, dict) else payload
     return [_document(row["group"], row["text"], row.get("topic", "")) for row in rows]
-
 
 def _load_txt(path):
     topic = path.stem
@@ -72,14 +63,11 @@ def _load_txt(path):
         documents.append(_document(row[0], row[1], topic))
     return documents
 
-
 def _document(group, text, topic):
     group = group.strip()
     if group not in GROUPS:
         raise ValueError(f"Unknown group {group!r}; expected one of {GROUPS}")
     return {"text": html.unescape(str(text)).strip(), "group": group, "topic": str(topic).strip()}
 
-
 def _read_text(path):
-    # DivSumm files are Windows-1252
     return path.read_bytes().decode("cp1252")

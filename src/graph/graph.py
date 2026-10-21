@@ -1,8 +1,3 @@
-# Agent: summary, claims, mapping, fixed query, check.
-# No claims, or no inconsistent claim: stop.
-# One inconsistent claim can be rewritten once, then checked again.
-# The baseline graph is only the summary step.
-
 from langgraph.graph import END, START, StateGraph
 
 from src.config import MAX_REVISIONS, SUMMARY_SENTENCES
@@ -15,7 +10,6 @@ from src.nodes.rewrite import rewrite
 from src.nodes.select_query import select_query
 from src.nodes.summarize import summarize
 
-
 def build_graph():
     builder = StateGraph(AgentState)
     builder.add_node("summarize", summarize)
@@ -24,7 +18,6 @@ def build_graph():
     builder.add_node("select_query", select_query)
     builder.add_node("evaluate", evaluate)
     builder.add_node("rewrite", rewrite)
-
     builder.add_edge(START, "summarize")
     builder.add_edge("summarize", "extract_claims")
     builder.add_conditional_edges(
@@ -42,14 +35,12 @@ def build_graph():
     builder.add_edge("rewrite", "extract_claims")
     return builder.compile()
 
-
 def build_baseline_graph():
     builder = StateGraph(AgentState)
     builder.add_node("summarize", summarize)
     builder.add_edge(START, "summarize")
     builder.add_edge("summarize", END)
     return builder.compile()
-
 
 def initial_state(
     documents,
@@ -59,6 +50,7 @@ def initial_state(
     k = SUMMARY_SENTENCES,
     mode = "agent",
     max_revisions = MAX_REVISIONS,
+
 ):
     return {
         "topic": topic,
@@ -80,7 +72,6 @@ def initial_state(
         "passed": False,
         "trace": [],
     }
-
 
 def draw_mermaid(mode = "agent"):
     graph = build_baseline_graph() if mode == "baseline" else build_graph()

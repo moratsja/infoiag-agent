@@ -1,8 +1,3 @@
-# Read the reasoner status stored for each claim.
-# A rewrite issue is created only for CONTRADICTED.
-# passed means every claim is SUPPORTED.
-
-
 def evaluate(state):
     claims = state.get("claims") or []
     grouped = state.get("query_results_by_claim") or []
@@ -35,7 +30,6 @@ def evaluate(state):
         "trace": ["evaluate"],
     }
 
-
 def _is_supported(verdict):
     if verdict["status"] != "SUPPORTED":
         return False
@@ -43,7 +37,6 @@ def _is_supported(verdict):
     if message.startswith("Reasoner error") or "inconsistent before" in message:
         return False
     return True
-
 
 def _item_for(index, grouped):
     for item in grouped:

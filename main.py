@@ -1,6 +1,3 @@
-# Run one tweet file through the agent, or through the baseline with --baseline.
-
-
 import argparse
 import json
 import time
@@ -8,7 +5,6 @@ from pathlib import Path
 
 from src.config import DATA_PROCESSED, ONTOLOGY_PATH, SUMMARY_SENTENCES, USER_PROMPTS, load_documents
 from src.graph.graph import build_baseline_graph, build_graph, initial_state
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -21,11 +17,10 @@ def parse_args():
     parser.add_argument("--prompt", choices=sorted(USER_PROMPTS), required=True)
     parser.add_argument("--topic", help="Topic name. Defaults to the topic on the first tweet.")
     parser.add_argument("--k", type=int, default=SUMMARY_SENTENCES, help="Sentences in the summary")
-    parser.add_argument("--runs", type=int, default=1, help="Repeated runs, for generation variability")
+    parser.add_argument("--runs", type=int, default=1)
     parser.add_argument("--baseline", action="store_true", help="One-shot LLM, no ontology")
     parser.add_argument("--save", action="store_true", help="Write each run under data/processed")
     return parser.parse_args()
-
 
 def main():
     args = parse_args()
@@ -36,11 +31,8 @@ def main():
     prompt = USER_PROMPTS[args.prompt]
     mode = "baseline" if args.baseline else "agent"
     graph = build_baseline_graph() if args.baseline else build_graph()
-
     if mode == "agent" and not ONTOLOGY_PATH.is_file():
         print(f"Ontology file missing: {ONTOLOGY_PATH}")
-        print("Export the Protégé ontology to that path. Queries will be marked as errors until then.")
-
     for run_index in range(1, args.runs + 1):
         state = initial_state(
             documents=documents,
@@ -75,7 +67,7 @@ def _print_run(run_index, result, elapsed):
         if result["revision"] >= result["max_revisions"]:
             kinds = {issue["kind"] for issue in result["issues"]}
             if "inconsistency" in kinds:
-                print("Contradictions remain after the rewrite limit. Validation did not succeed.")
+                print("Still contradicted after the rewrite.")
         errors = [item for item in result["query_results"] if item["status"] == "error"]
         for item in errors:
             print(f"query error {item['query_id']}: {item['detail']}")
@@ -101,7 +93,6 @@ def _save_run(args, run_index, result, elapsed):
     }
     destination.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"saved {destination}")
-
 
 if __name__ == "__main__":
     main()

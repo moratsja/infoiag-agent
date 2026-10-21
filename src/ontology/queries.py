@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 from src.config import ONTOLOGY_IRI
 
-
 @dataclass(frozen=True)
 class OntologyQuery:
     id: str
@@ -12,14 +11,12 @@ class OntologyQuery:
     topics: tuple[str, ...]
     triggers: tuple[str, ...]
 
-
 def _prefix():
     return f"PREFIX : <{ONTOLOGY_IRI}>\n"
 
-
 QUERIES = (
     OntologyQuery(
-        id="q1_americans_not_celebrating_christmas",
+        id="q1",
         title="Americans who do not celebrate Christmas",
         manchester="Person and (isCitizenOf value America) and not (isParticipantOf value christmas)",
         sparql=_prefix()
@@ -32,18 +29,18 @@ QUERIES = (
         triggers=("christmas", "american"),
     ),
     OntologyQuery(
-        id="q5_america_recognizes_christmas",
+        id="q2",
         title="Public holiday recognized by America",
         manchester="america and (recognizesPublicHoliday value christmas)",
         sparql=_prefix()
         + """SELECT ?country ?holiday WHERE {
   ?country :recognizesPublicHoliday ?holiday .
+
 }""",
         topics=("Christmas",),
         triggers=("christmas", "america"),
     ),
 )
-
 
 def get_query(query_id):
     for query in QUERIES:
@@ -51,7 +48,6 @@ def get_query(query_id):
             return query
     known = ", ".join(query.id for query in QUERIES)
     raise KeyError(f"Unknown query {query_id!r}. Known queries: {known}")
-
 
 def select_queries(topic, text):
     blob = f"{topic}\n{text}".lower()

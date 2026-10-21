@@ -1,9 +1,7 @@
-
 import os
 import re
 
 from src.config import LLM_TEMPERATURE, OPENAI_MODEL
-
 
 def get_chat_model():
     if not os.getenv("OPENAI_API_KEY"):
@@ -11,7 +9,6 @@ def get_chat_model():
     from langchain_openai import ChatOpenAI
 
     return ChatOpenAI(model=OPENAI_MODEL, temperature=LLM_TEMPERATURE)
-
 
 def complete(system, user):
     messages = []
@@ -29,7 +26,6 @@ def complete(system, user):
                 parts.append(str(block.get("text", "")))
         content = "".join(parts)
     return _strip_fence(str(content))
-
 
 def _strip_fence(text):
     stripped = text.strip()
