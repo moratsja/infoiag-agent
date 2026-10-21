@@ -3,24 +3,20 @@
 import re
 
 from src.ontology.loader import load_ontology
-from src.ontology.queries import select_queries
 
 
-def list_classes():
-    onto = load_ontology()
-    return sorted(cls.name for cls in onto.classes())
-
-
-def run_queries_for_text(topic, text):
-    return [run_query(query) for query in select_queries(topic, text)]
-
-
-def run_sparql(query_id, sparql, manchester = ""):
+def run_sparql(query_id, sparql, manchester=""):
     try:
         onto = load_ontology()
         rows = _run_sparql(onto, sparql)
     except Exception as exc:
-        return _error_parts(query_id, manchester, f"{type(exc).__name__}: {exc}")
+        return {
+            "query_id": query_id,
+            "manchester": manchester,
+            "status": "error",
+            "detail": f"{type(exc).__name__}: {exc}",
+            "rows": [],
+        }
     return {
         "query_id": query_id,
         "manchester": manchester,
@@ -31,18 +27,7 @@ def run_sparql(query_id, sparql, manchester = ""):
 
 
 def run_query(query):
-    result = run_sparql(query.id, query.sparql, query.manchester)
-    return result
-
-
-def _error_parts(query_id, manchester, detail):
-    return {
-        "query_id": query_id,
-        "manchester": manchester,
-        "status": "error",
-        "detail": detail,
-        "rows": [],
-    }
+    return run_sparql(query.id, query.sparql, query.manchester)
 
 
 def _run_sparql(onto, sparql):

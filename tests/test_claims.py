@@ -3,7 +3,6 @@ from src.graph.graph import initial_state
 from src.graph.routing import route_after_evaluate
 from src.nodes.claims import parse_claims
 from src.nodes.evaluate import evaluate
-from src.ontology.claim_queries import queries_for_claim
 from src.ontology.reasoner import check_mapping
 from src.ontology.tools import run_sparql
 
@@ -126,19 +125,9 @@ def test_live_christmas_facts_match_the_ontology():
     america = run_sparql("america_type", _type(":america"))
     christmas = run_sparql("christmas_type", _type(":christmas"))
     holiday = run_sparql("holiday", _holiday())
-    mapped = queries_for_claim(
-        {
-            "subject": "America",
-            "predicate": "recognizesPublicHoliday",
-            "object": "Christmas",
-            "relevant_entities": ["america", "christmas"],
-        }
-    )
     assert "Country" in {row["type"] for row in america["rows"]}
     assert "PublicHolidayEvent" in {row["type"] for row in christmas["rows"]}
     assert {"country": "america", "holiday": "christmas"} in holiday["rows"]
-    assert mapped[0]["status"] == "ok"
-    assert {"country": "america", "holiday": "christmas"} in mapped[0]["rows"]
 
 
 def _type(individual):

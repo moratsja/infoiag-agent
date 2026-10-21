@@ -1,6 +1,7 @@
-# Read the HermiT status stored for each claim.
+# Read the reasoner status stored for each claim.
 # A rewrite issue is created only for CONTRADICTED.
-# passed means every claim is SUPPORTED, not merely that nothing was contradicted.
+# passed means every claim is SUPPORTED.
+
 
 def evaluate(state):
     claims = state.get("claims") or []

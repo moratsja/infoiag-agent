@@ -1,4 +1,4 @@
-# Run the HermiT check for each mapped claim.
+# Run Owlready2's reasoner for each mapped claim.
 # The model does not write SPARQL. One claim is not judged from another claim's row.
 
 from src.ontology.reasoner import check_mapping

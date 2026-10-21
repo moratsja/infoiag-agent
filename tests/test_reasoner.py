@@ -40,14 +40,29 @@ def test_public_holiday_type_is_supported():
     assert verdict["status"] == "SUPPORTED"
 
 
-def test_sporting_type_is_contradicted_with_the_poc_disjointness():
+def test_reasoner_infers_person_superclass():
+    verdict = check_mapping(_type_mapping("evaPerson", "Person"))
+    assert verdict["status"] == "SUPPORTED"
+
+
+def test_sporting_type_is_not_verifiable_from_the_file():
+    # PublicHolidayEvent and SportingCompetitionEvent are not disjoint in the RDF file.
     verdict = check_mapping(_type_mapping("christmas", "SportingCompetitionEvent"))
-    assert verdict["status"] == "CONTRADICTED"
-
-
-def test_sporting_type_is_not_verifiable_without_the_poc_disjointness():
-    verdict = check_mapping(_type_mapping("christmas", "SportingCompetitionEvent"), use_poc_disjoint = False)
     assert verdict["status"] == "NOT_VERIFIABLE"
+
+
+def test_disjoint_competition_classes_have_no_individual():
+    # LeagueCompetition is disjoint with TournamentCompetition, but neither has an individual.
+    # The checker does not invent one, so this axiom cannot contradict a current claim.
+    world = World()
+    onto = world.get_ontology(str(ONTOLOGY_PATH)).load()
+    names = set()
+    for group in onto.LeagueCompetition.disjoints():
+        for cls in group.entities:
+            names.add(cls.name)
+    assert "TournamentCompetition" in names
+    assert list(onto.LeagueCompetition.instances()) == []
+    assert list(onto.TournamentCompetition.instances()) == []
 
 
 def test_a_different_class_is_not_a_contradiction_by_itself():

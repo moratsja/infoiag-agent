@@ -31,6 +31,26 @@ def _mapping(class_name, text):
 
 
 def _install(monkeypatch, rewrite_text):
+    # The RDF file has no individual the checker can contradict.
+    # This stub only drives the graph. tests/test_reasoner.py uses the real file.
+    def fake_check(mapping):
+        class_name = (mapping.get("object") or {}).get("ontology_class")
+        if class_name == "SportingCompetitionEvent":
+            return {
+                "status": "CONTRADICTED",
+                "template": "type",
+                "message": "Test stub: this verdict is not from the ontology file.",
+            }
+        if class_name == "Event":
+            return {
+                "status": "SUPPORTED",
+                "template": "type",
+                "message": "Test stub: entailed class membership.",
+            }
+        return {"status": "NOT_VERIFIABLE", "template": None, "message": "Test stub."}
+
+    monkeypatch.setattr(importlib.import_module("src.nodes.select_query"), "check_mapping", fake_check)
+
     def fake_complete(system, user):
         if system.startswith("Extract claims"):
             if "sporting competition" in user:

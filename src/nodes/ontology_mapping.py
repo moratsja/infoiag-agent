@@ -19,10 +19,11 @@ Use "" when a field has no match.
 A class membership leaves ontology_property and the object entity empty, and puts the class in ontology_class.
 A relation puts the property name in ontology_property and individuals in both ontology_entity fields.
 If the claim does not fit exactly one of those shapes, set ontology_relevant to false.
+The same shapes apply to every topic. Use only names from the vocabulary.
 Example:
 {"mappings": [
- {"claim_index": 0, "ontology_relevant": true, "subject": {"text": "America", "ontology_class": "Country", "ontology_entity": "america"}, "predicate": {"text": "recognizes", "ontology_property": "recognizesPublicHoliday"}, "object": {"text": "Christmas", "ontology_class": "", "ontology_entity": "christmas"}},
- {"claim_index": 1, "ontology_relevant": true, "subject": {"text": "Christmas", "ontology_class": "", "ontology_entity": "christmas"}, "predicate": {"text": "is a", "ontology_property": ""}, "object": {"text": "sporting competition event", "ontology_class": "SportingCompetitionEvent", "ontology_entity": ""}}
+ {"claim_index": 0, "ontology_relevant": true, "subject": {"text": "Eva", "ontology_class": "", "ontology_entity": "evaPerson"}, "predicate": {"text": "is a", "ontology_property": ""}, "object": {"text": "a person", "ontology_class": "Person", "ontology_entity": ""}},
+ {"claim_index": 1, "ontology_relevant": true, "subject": {"text": "bread", "ontology_class": "", "ontology_entity": "breadFood"}, "predicate": {"text": "has ingredient", "ontology_property": "hasIngredient"}, "object": {"text": "flour", "ontology_class": "", "ontology_entity": "flourIngredient"}}
 ]}
 """
 

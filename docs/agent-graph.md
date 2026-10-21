@@ -49,7 +49,7 @@ The model still does not write the query.
 
 ### 4. select_query
 
-Python asks HermiT about the mapped claim. The model does not write a query.
+Python calls Owlready2's reasoner on the mapped claim. The model does not write a query.
 
 Two shapes are checked. An individual can belong to a class, such as `christmas` type `Event`. Or two individuals can be linked by an object property, such as `america recognizesPublicHoliday christmas`. The subject and object of that claim are the ones that are checked. A row about America is not reused for a different pair.
 
@@ -57,19 +57,19 @@ Anything else is not verifiable. SPARQL can still list stored triples. A `FILTER
 
 ### 5. evaluate
 
-Each claim gets a label from HermiT.
+Each claim gets a label from Owlready2's reasoner.
 
-Supported means the ontology entails the claim. Contradicted means adding the claim makes a consistent ontology inconsistent. Not verifiable means neither the claim nor its negation is established. A reasoner error is reported in the message and is not called a contradiction.
+Supported means the reasoner entails the claim. Contradicted means adding the claim makes a consistent ontology inconsistent. Not verifiable means neither the claim nor its negation follows. A reasoner error is reported in the message and is not called a contradiction.
 
 A not-verifiable claim does not start a rewrite. `passed` is true only when every claim is supported. “Americans love Christmas” is not verifiable, because a public holiday is not a feeling.
 
-The file does not say that a public holiday and a sporting competition are disjoint. The checker adds that axiom only on a temporary copy, so the sporting-competition example can be contradicted. That axiom is a modelling assumption for the proof of concept.
+The file does not say that a public holiday and a sporting competition are disjoint, so that claim is not verifiable. `LeagueCompetition` is disjoint with `TournamentCompetition`, and neither class has an individual. The checker does not add an axiom to invent a contradiction.
 
 ### 6. rewrite, or stop
 
-A rewrite happens only when a claim is contradicted, and at most once. The new summary is extracted, mapped, and checked again.
+A rewrite happens when a claim is contradicted, and at most once. The new summary is extracted, mapped, and checked again.
 
-If nothing is contradicted, the run stops. If a contradiction is still there after that rewrite, `passed` stays false.
+If there is no contradicted claim, the run stops. A not-verifiable claim alone does not rewrite. If a contradiction is still there after that rewrite, `passed` stays false.
 
 ## Where this gets stuck
 
@@ -79,4 +79,4 @@ The bias we want to catch is a summary that takes the question at face value. Th
 
 To detect that, a query would have to say something about that kind of claim. The ontology does not really have material for it. The relations and individuals we have do not describe how people feel about Christmas, or who does and does not celebrate it. The queries we wrote are about other things, so they do not line up with the sentence we would want to flag.
 
-What happens in practice is that the summary gets split into ordinary remarks about gifts, family, or frustration. Those remarks do not match a query. They come back as not verifiable, no issue is raised, and the run stops. A summary can still lean on the idea that Americans love Christmas and still pass, because nothing in the ontology check is aimed at that idea.
+What happens in practice is that ordinary remarks about gifts, family, or frustration do not match a class or an object property. They come back as not verifiable. That is not treated as false, and it does not by itself start a rewrite. Equal Coverage and the other report metrics are not part of this loop.
